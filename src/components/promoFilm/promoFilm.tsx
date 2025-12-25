@@ -18,7 +18,7 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import styles from './promoFilm.module.scss';
 
 interface PromoFilmProps {

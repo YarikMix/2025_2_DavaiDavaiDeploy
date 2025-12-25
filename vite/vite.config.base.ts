@@ -34,7 +34,7 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 					plugins: ['@svgr/plugin-jsx'],
 					jsxRuntimeImport: {
 						namespace: 'jsx',
-						source: '@robocotik/react/jsx-runtime',
+						source: '@/modules/react/jsx-runtime',
 					},
 					jsxRuntime: 'automatic',
 				},
@@ -55,7 +55,7 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 			jsx: 'transform',
 			jsxFactory: 'jsx',
 			jsxFragment: 'Fragment',
-			jsxInject: "import {jsx, Fragment} from '@robocotik/react/jsx-runtime'",
+			jsxInject: "import {jsx, Fragment} from '@/modules/react/jsx-runtime'",
 			jsxDev: false,
 		},
 		server: {

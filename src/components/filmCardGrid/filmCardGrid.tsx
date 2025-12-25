@@ -8,7 +8,7 @@ import { selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { CardGrid, Flex, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 

@@ -1,6 +1,6 @@
 import type { ModelsCompilation } from '@/types/models';
 import { Flex, Paragraph, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import styles from './compilationInfo.module.scss';
 
 interface CompilationInfoProps {

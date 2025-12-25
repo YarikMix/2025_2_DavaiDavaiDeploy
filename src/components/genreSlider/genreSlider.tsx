@@ -10,7 +10,7 @@ import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';

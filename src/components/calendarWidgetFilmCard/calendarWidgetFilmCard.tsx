@@ -12,7 +12,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Button, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import styles from './calendarWidgetFilmCard.module.scss';
 
 interface CalendarWidgetFilmCardProps {

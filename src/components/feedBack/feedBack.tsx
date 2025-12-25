@@ -14,7 +14,7 @@ import {
 	Separator,
 	Subhead,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import styles from './feedBack.module.scss';
 
 interface FeedBackProps {

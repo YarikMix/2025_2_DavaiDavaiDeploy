@@ -20,7 +20,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { SMALL_TABLET_MIN_WIDTH } from '../../consts/adaptivity';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';

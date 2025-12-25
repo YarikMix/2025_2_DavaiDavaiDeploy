@@ -9,7 +9,7 @@ import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
-import { Component, createRef } from '@robocotik/react';
+import { Component, createRef } from '@/modules/react';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
