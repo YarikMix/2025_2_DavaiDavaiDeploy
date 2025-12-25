@@ -1,10 +1,7 @@
-import Favorite from '@/assets/favorite.svg?react';
+import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import { withModal } from '@/modules/modals/withModal';
-import type { WithModalProps } from '@/modules/modals/withModalProps';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import { Link } from '@/modules/router/link.tsx';
@@ -12,8 +9,6 @@ import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/favorites/actions';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Component } from '@robocotik/react';
-import clsx from 'ddd-clsx';
 import {
 	Badge,
 	Flex,
@@ -23,39 +18,21 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from 'ddd-ui-kit';
+} from '@/uikit/index';
+import { Component } from '@robocotik/react';
 import styles from './favoritesFilmCard.module.scss';
 
 interface FavoritesFilmCardProps {
 	film: ModelsFavFilm;
 	deleteFromFavorites: (id: string) => {};
-	addToFavorites: (id: string) => {};
 }
 
-interface FavoritesFilmCardState {
-	inFav: boolean;
-}
-
-class FavoritesFilmCardComponent extends Component<
-	FavoritesFilmCardProps & WithModalProps,
-	FavoritesFilmCardState
-> {
-	state = {
-		inFav: true,
-	};
-
-	handleChangeFavoriteStatus = (event: MouseEvent) => {
+class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
+	handleDeletionFromFavorites = (event: MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (this.state.inFav) {
-			this.setState({ inFav: false });
-			this.props.deleteFromFavorites(this.props.film.id);
-			return;
-		}
-
-		this.setState({ inFav: true });
-		this.props.addToFavorites(this.props.film.id);
+		this.props.deleteFromFavorites(this.props.film.id);
 	};
 
 	render() {
@@ -78,11 +55,7 @@ class FavoritesFilmCardComponent extends Component<
 			<Link href={`/films/${id}`} className={styles.linkWrap}>
 				<Flex className={styles.filmCard} direction="row" align="center">
 					<div className={styles.imageContainer}>
-						<Image
-							className={styles.image}
-							src={getImageURL(image)}
-							alt={title}
-						/>
+						<Image className={styles.image} src={image} alt={title} />
 						{ratingType && (
 							<Badge
 								mode={ratingType}
@@ -93,12 +66,7 @@ class FavoritesFilmCardComponent extends Component<
 						)}
 					</div>
 					<Flex className={styles.content} direction="column" align="start">
-						<Title
-							className={styles.title}
-							level="5"
-							align="left"
-							data-test-id="film-title"
-						>
+						<Title className={styles.title} level="5" align="left">
 							{title}
 						</Title>
 						<Flex className={styles.info}>
@@ -141,13 +109,9 @@ class FavoritesFilmCardComponent extends Component<
 					<IconButton
 						mode="secondary"
 						className={styles.iconBtn}
-						onClick={this.handleChangeFavoriteStatus}
+						onClick={this.handleDeletionFromFavorites}
 					>
-						<Favorite
-							className={clsx(styles.icon, {
-								[styles.removed]: !this.state.inFav,
-							})}
-						/>
+						<Favorite className={styles.icon} />
 					</IconButton>
 				</Flex>
 			</Link>
@@ -158,11 +122,9 @@ class FavoritesFilmCardComponent extends Component<
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	deleteFromFavorites: (id: string) =>
 		dispatch(actions.deleteFromFavoritesAction(id)),
-	addToFavorites: (id: string) => dispatch(actions.addToFavoritesAction(id)),
 });
 
 export const FavoritesFilmCard = compose(
 	withRouter,
-	withModal,
 	connect(null, mapDispatchToProps),
 )(FavoritesFilmCardComponent);

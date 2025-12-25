@@ -1,6 +1,5 @@
 import { defineConfig, mergeConfig } from 'vite';
 import { baseViteConfig } from './vite.config.base';
-import { pwaViteConfig } from './vitePWA.config';
 import { sentryViteConfig } from './viteSentry.config';
 
 const stageViteConfig = {
@@ -18,6 +17,6 @@ const stageViteConfig = {
 export default defineConfig((env) =>
 	mergeConfig(
 		mergeConfig(stageViteConfig, baseViteConfig(env)),
-		mergeConfig(sentryViteConfig(env), pwaViteConfig(env)),
+		sentryViteConfig(env),
 	),
 );

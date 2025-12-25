@@ -1,17 +1,32 @@
 import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfoHelper';
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import type { State } from '@/modules/redux/types/store.ts';
+import actions from '@/redux/features/actor/actions';
+import {
+	selectActor,
+	selectActorError,
+} from '@/redux/features/actor/selectors';
+import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
+import { Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './actorInfo.module.scss';
 
 interface ActorInfoProps {
 	actor: ModelsActorPage | null;
 	error: string | null;
+	getActor: (id: string) => void;
 }
 
-export class ActorInfo extends Component<ActorInfoProps> {
+class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
+	onMount() {
+		this.props.getActor(this.props.router.params.id);
+	}
+
 	render() {
 		if (this.props.error) {
 			return (
@@ -46,7 +61,7 @@ export class ActorInfo extends Component<ActorInfoProps> {
 			<Flex className={styles.actor} direction="row" align="start">
 				<Flex className={styles.media} align="center" justify="center">
 					<Image
-						src={getImageURL(photo)}
+						src={photo}
 						alt={russian_name || 'Photo'}
 						className={styles.cover}
 					/>
@@ -242,3 +257,17 @@ export class ActorInfo extends Component<ActorInfoProps> {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	actor: selectActor(state),
+	error: selectActorError(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getActor: (id: string) => dispatch(actions.getActorAction(id)),
+});
+
+export const ActorInfo = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(ActorInfoComponent);

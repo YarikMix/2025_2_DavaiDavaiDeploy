@@ -8,9 +8,6 @@ export const selectGenres: Selector = (state: State): ModelsGenre[] =>
 export const selectGenre: Selector = (state: State): ModelsGenre =>
 	state.genre.curGenre;
 
-export const selectGenreError: Selector = (state: State): string | null =>
-	state.genre.genreError;
-
 export const selectGenreFilms: Selector = (
 	state: State,
 ): ModelsMainPageFilm[] => state.genre.genreFilms;

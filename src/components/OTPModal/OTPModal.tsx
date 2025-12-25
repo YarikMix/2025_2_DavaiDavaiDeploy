@@ -1,5 +1,5 @@
+import { Button, Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { Button, Flex, Subhead, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
@@ -24,28 +24,19 @@ export class OTPModalComponent extends Component<
 	};
 	render() {
 		return (
-			<BaseModal
-				closeOnOverlayClick={false}
-				closeOnEsc={false}
-				hasClose={false}
-			>
+			<BaseModal closeOnOverlayClick={false}>
 				<Flex
 					className={style.modalLogout}
 					direction="column"
-					justify="around"
+					justify="between"
 					align="center"
 				>
 					<Flex className={style.modalHeader} align="center" direction="column">
 						<Title className={style.modalTitle} level="5">
-							Отсканируйте QR-код в приложении-аутентификаторе
+							Обязательно сохраните QR-код
 						</Title>
-						<Subhead
-							className={style.subTitle}
-							level="11"
-							color={'light'}
-							align="center"
-						>
-							Код потребуется Вам при всех дальнейших входах в аккаунт
+						<Subhead className={style.subTitle} level="11" color={'light'}>
+							Он потребуется Вам при всех дальнейших входах в аккаунт
 						</Subhead>
 					</Flex>
 					<Flex

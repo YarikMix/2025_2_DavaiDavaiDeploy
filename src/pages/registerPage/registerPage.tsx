@@ -1,9 +1,8 @@
-import close from '@/assets/close.svg';
-import userSvg from '@/assets/user.svg';
+import close from '@/assets/img/close.svg';
+import userSvg from '@/assets/img/user.svg';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
-import { getPathWithFrom } from '@/helpers/getPathWithFrom/getPathWithFrom.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
 import { validatePasswordConfirm } from '@/helpers/validatePasswordConfirm/validatePasswordConfirm.ts';
@@ -11,94 +10,48 @@ import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
-import { Redirect } from '@/modules/router/redirect.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
 	selectUserError,
-	selectvkidError,
 } from '@/redux/features/user/selectors.ts';
-import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component, createRef } from '@robocotik/react';
-import * as VKID from '@vkid/sdk';
-import { Button, Flex, FormItem, Headline, Logo, Title } from 'ddd-ui-kit';
-import { ERROR_CODES } from '../../consts/errorCodes';
-import { MODALS } from '../../modules/modals/modals';
-import { withModal } from '../../modules/modals/withModal';
-import type { WithModalProps } from '../../modules/modals/withModalProps';
+import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
+import { Component } from '@robocotik/react';
+import { SMALL_TABLET_MIN_WIDTH } from '../../consts/adaptivity';
+import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
+import { Redirect } from '../../modules/router/redirect.tsx';
+import { store } from '../../redux/store';
 import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
 	user: ModelsUser;
 	userError: string;
-	vkidError: string;
 	registerUser: (login: string, password: string) => void;
-	vkAuthLogin: (access_token: string, login?: string) => void;
-	clearvkidError: () => void;
 }
 
 export class RegisterPageNotConnected extends Component<
-	RegistrationPageProps & WithRouterProps & WithModalProps
+	RegistrationPageProps & WithRouterProps & WithAdaptivityProps
 > {
 	state = {
 		username: '',
 		password: '',
 		repeatPassword: '',
-		showVideo: window.innerWidth >= 768,
 		validationErrors: {
 			username: '',
 			password: '',
 			repeatPassword: '',
 		},
 		errorShown: false,
-		accessToken: '',
-	};
-	oneTapContainer = createRef<HTMLButtonElement>();
-
-	handleResize = () => {
-		if (window.innerWidth < 768) {
-			this.setState({ showVideo: false });
-		} else {
-			this.setState({ showVideo: true });
-		}
 	};
 
 	onMount() {
 		store.dispatch(actions.resetUserError());
-		window.addEventListener('resize', this.handleResize);
-		const oneTap = new VKID.OneTap();
-		oneTap
-			.render({
-				container: this.oneTapContainer.current as HTMLElement,
-				styles: {
-					borderRadius: 16,
-					height: 56,
-				},
-			})
-			.on(
-				VKID.OneTapInternalEvents.LOGIN_SUCCESS,
-				(payload: VKID.AuthResponse) => {
-					const code = payload.code;
-					const deviceId = payload.device_id;
-					VKID.Auth.exchangeCode(code, deviceId)
-						.then(async (data) => {
-							this.state.accessToken = data.access_token;
-							this.props.vkAuthLogin(this.state.accessToken);
-						})
-
-						.catch(() => {
-							AppToast.error('Не удалось войти через ВКонтакте');
-						});
-				},
-			);
-	}
-
-	onUnmount() {
-		window.removeEventListener('resize', this.handleResize);
 	}
 
 	validateFields() {
@@ -145,17 +98,6 @@ export class RegisterPageNotConnected extends Component<
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}
-
-		if (
-			this.props.vkidError &&
-			this.props.vkidError === ERROR_CODES.PRECONDITION_FAILED.toString()
-		) {
-			this.props.modal.open(MODALS.VK_ID_MODAL, {
-				access_token: this.state.accessToken,
-				onSubmit: this.props.vkAuthLogin,
-				handleClearError: this.props.clearvkidError,
-			});
-		}
 	}
 
 	onFieldChange(
@@ -182,10 +124,12 @@ export class RegisterPageNotConnected extends Component<
 	}
 
 	render() {
-		const redirectPath =
-			'from' in this.props.router.params ? this.props.router.params.from : '/';
-
 		if (this.props.user) {
+			const redirectPath =
+				'from' in this.props.router.params
+					? this.props.router.params.from
+					: '/';
+
 			return <Redirect to={redirectPath} />;
 		}
 
@@ -197,24 +141,21 @@ export class RegisterPageNotConnected extends Component<
 					justify="center"
 					align="center"
 				>
-					<Link className={styles.closeLink} href={redirectPath}>
+					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
-					{this.state.showVideo && (
-						<div className={styles.videoContainer}>
-							<video
-								src={getStaticURL('/video/login_signup.mp4')}
-								alt="loginVideo"
-								className={styles.loginImg}
-								autoplay
-								muted
-								loop
-								playsinline
-								disablePictureInPicture
-								controlsList="nodownload noremoteplayback"
-							/>
-							<Logo level="7" className={styles.logo} />
-						</div>
+					{this.props.adaptivity.viewWidth > SMALL_TABLET_MIN_WIDTH && (
+						<video
+							src={getStaticURL('/video/login_signup.mp4')}
+							alt="loginVideo"
+							className={styles.loginImg}
+							autoplay
+							muted
+							loop
+							playsinline
+							disablePictureInPicture
+							controlsList="nodownload noremoteplayback"
+						/>
 					)}
 
 					<Flex
@@ -252,11 +193,9 @@ export class RegisterPageNotConnected extends Component<
 									this.state.validationErrors.username ? 'error' : 'default'
 								}
 								value={this.state.username}
-								onChange={(value: string) =>
-									this.onFieldChange(value, 'username')
-								}
-								name="login"
+								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
+
 							<PasswordInputField
 								mode="primary"
 								label="Пароль"
@@ -265,7 +204,6 @@ export class RegisterPageNotConnected extends Component<
 								errorMessage={this.state.validationErrors.password}
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
-								name="password"
 							/>
 							<PasswordInputField
 								mode="primary"
@@ -277,7 +215,6 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value) =>
 									this.onFieldChange(value, 'repeatPassword')
 								}
-								name="repeat-password"
 							/>
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
@@ -287,11 +224,9 @@ export class RegisterPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
-								type="submit"
 							>
 								Зарегистрироваться
 							</Button>
-							<div ref={this.oneTapContainer}></div>
 							<div className={styles.register__button}>
 								Уже есть аккаунт?{' '}
 								<Link
@@ -312,19 +247,15 @@ export class RegisterPageNotConnected extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserError(state),
-	vkidError: selectvkidError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	registerUser: (login: string, password: string) =>
 		dispatch(actions.registerUserAction(login, password)),
-	vkAuthLogin: (access_token: string, login?: string) =>
-		dispatch(actions.vkidLoginUserAction(access_token, login)),
-	clearvkidError: () => dispatch(actions.clearvkidErrorAction()),
 });
 
 export const RegisterPage = compose(
 	withRouter,
-	withModal,
+	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(RegisterPageNotConnected);

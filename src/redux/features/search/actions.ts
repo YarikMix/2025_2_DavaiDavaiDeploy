@@ -10,24 +10,6 @@ import actionTypes from './actionTypes';
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
 /**
- * Останавливает голосовой поиск
- */
-const stopVoiceSearch = (): Action => {
-	return {
-		type: actionTypes.VOICE_SEARCH_STOPPED,
-	};
-};
-
-/*
- * Запускает голосовой поиск
- */
-const setVoiceSearchIsWorking = (): Action => {
-	return {
-		type: actionTypes.VOICE_SEARCH_IS_WORKING,
-	};
-};
-
-/**
  * Возвращает успешно загруженный результат голосового поиска
  */
 const returnVoiceSearchResultAction = (
@@ -166,6 +148,4 @@ export default {
 	getSearchResultAction,
 	clearSearchResultAction,
 	clearVoiceSearchResultAction,
-	stopVoiceSearch,
-	setVoiceSearchIsWorking,
 };

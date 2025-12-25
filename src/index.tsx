@@ -8,11 +8,8 @@ import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
-import * as VKID from '@vkid/sdk';
-import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
-import Layout from './components/Layout/Layout';
 import {
 	AppToast,
 	ToastContainer,
@@ -20,8 +17,8 @@ import {
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL } from './consts/urls.ts';
+import { AdaptivityProvider } from './modules/adaptivity/AdaptivityProvider';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
-import { NotificationManager } from './modules/notifications/notificationManager';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -39,20 +36,9 @@ import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
-import {
-	selectIsAuthentificated,
-	selectIsChecked,
-	selectUser,
-} from './redux/features/user/selectors';
+import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
-
-VKID.Config.init({
-	app: import.meta.env.VITE_VK_SDK_APP_ID,
-	redirectUrl: import.meta.env.VITE_VK_ID_REDIRECT_URL,
-	source: VKID.ConfigSource.LOWCODE,
-	scope: 'email',
-	responseMode: VKID.ConfigResponseMode.Callback,
-});
+import type { ModelsUser } from './types/models.ts';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -83,43 +69,22 @@ window.addEventListener('offline', () => {
 });
 
 interface AppProps {
-	isAuthentificated: boolean;
-	isChecked: boolean;
+	user: ModelsUser;
 	checkUser: () => {};
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
-
-		if (
-			NotificationManager.isSupported() &&
-			Notification.permission === 'default'
-		) {
-			NotificationManager.requestPermission();
-		}
-	}
-
-	onUpdate(): void | Promise<void> {
-		if (
-			!NotificationManager.hasWSConnection() &&
-			this.props.isAuthentificated
-		) {
-			NotificationManager.connect();
-		}
 	}
 
 	render() {
-		if (!this.props.isChecked) {
-			return <></>;
-		}
-
 		const isAuthPageOpen =
 			this.props.router.path.startsWith('/login') ||
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<Layout>
+			<div class="layout">
 				<ToastContainer />
 				{!isAuthPageOpen && <Header />}
 				<Routes>
@@ -135,7 +100,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/compilations/:id" component={<CompilationPage />} />
 				</Routes>
 				{!isAuthPageOpen && <Footer />}
-			</Layout>
+			</div>
 		);
 	}
 }
@@ -143,19 +108,19 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<ModalsProvider>
-					<RouterProvider>{this.props.children}</RouterProvider>
-				</ModalsProvider>
-			</Provider>
+			<ModalsProvider>
+				<Provider store={store}>
+					<AdaptivityProvider>
+						<RouterProvider>{this.props.children}</RouterProvider>
+					</AdaptivityProvider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
-	isChecked: selectIsChecked(state),
-	isAuthentificated: selectIsAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
