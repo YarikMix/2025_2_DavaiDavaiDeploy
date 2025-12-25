@@ -22,7 +22,7 @@ import {
 	Switch,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';

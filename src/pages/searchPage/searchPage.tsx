@@ -17,7 +17,7 @@ import type {
 } from '@/types/models';
 
 import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './searchPage.module.scss';
 
 interface SearchPageProps {

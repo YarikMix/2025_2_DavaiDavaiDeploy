@@ -9,7 +9,7 @@ import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
 import { Flex, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './filmRatingInput.module.scss';

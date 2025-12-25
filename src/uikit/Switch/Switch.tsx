@@ -1,5 +1,5 @@
 import clsx from '@/modules/clsx';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { Flex } from '../Flex/Flex';
 import styles from './Switch.module.scss';
 

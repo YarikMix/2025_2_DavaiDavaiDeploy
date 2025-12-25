@@ -1,6 +1,6 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import clsx from '@/modules/clsx';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './Avatar.module.scss';
 
 interface AvatarProps {

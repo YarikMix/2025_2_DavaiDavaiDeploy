@@ -1,4 +1,4 @@
-import { createContext } from '@/modules/react';
+import { createContext } from '@robocotik/react';
 
 export interface AdaptivityContextValue {
 	isWideDesktop: boolean;

@@ -1,5 +1,5 @@
 import clsx from '@/modules/clsx';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './Tooltip.module.scss';
 
 interface TooltipProps {

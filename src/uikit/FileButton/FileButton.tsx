@@ -1,4 +1,4 @@
-import { Component, createRef } from '@/modules/react';
+import { Component, createRef } from '@robocotik/react';
 import { Button } from '../Button/Button';
 import styles from './FileButton.module.scss';
 

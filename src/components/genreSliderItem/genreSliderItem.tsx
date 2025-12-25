@@ -1,7 +1,7 @@
 import { Link } from '@/modules/router/link';
 import type { ModelsGenre } from '@/types/models';
 import { Image } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './genreSliderItem.module.scss';
 
 interface GenreSliderItemProps {

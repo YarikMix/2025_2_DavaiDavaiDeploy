@@ -11,7 +11,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import { Button, Flex, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { PasswordInputField } from '../passwordInputField/passwordInputField.tsx';

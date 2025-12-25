@@ -11,7 +11,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
 import { Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './actorInfo.module.scss';

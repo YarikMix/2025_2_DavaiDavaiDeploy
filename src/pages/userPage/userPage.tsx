@@ -13,7 +13,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
 import { Flex, Headline, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {

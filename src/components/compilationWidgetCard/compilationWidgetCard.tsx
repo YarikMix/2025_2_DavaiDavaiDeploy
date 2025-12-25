@@ -9,7 +9,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
 import { Flex, Image, Subhead } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './compilationWidgetCard.module.scss';
 
 interface CompilationWidgetCardProps {

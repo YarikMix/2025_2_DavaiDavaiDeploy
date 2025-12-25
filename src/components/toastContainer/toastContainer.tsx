@@ -2,7 +2,7 @@ import { Toast } from '@/components/toast/toast';
 import type { ToastType } from '@/consts/toasts';
 
 import { Flex } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { compose } from '../../modules/redux';

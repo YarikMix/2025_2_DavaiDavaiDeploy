@@ -8,7 +8,7 @@ import { selectCompilations } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
 import { Flex, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { CompilationWidgetCard } from '../compilationWidgetCard/compilationWidgetCard';
 import styles from './compilationWidget.module.scss';
 

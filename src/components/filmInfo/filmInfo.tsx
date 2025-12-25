@@ -24,7 +24,7 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';
 

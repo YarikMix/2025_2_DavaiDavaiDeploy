@@ -28,7 +28,7 @@ import {
 	OTPInput,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { ERROR_CODES } from '../../consts/errorCodes';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';

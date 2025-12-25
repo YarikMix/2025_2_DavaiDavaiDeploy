@@ -1,4 +1,4 @@
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {

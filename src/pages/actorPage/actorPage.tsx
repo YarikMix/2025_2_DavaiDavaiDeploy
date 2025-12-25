@@ -5,7 +5,7 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/actor/actions';
 import type { Map } from '@/types/map';
 import { Flex } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './actorPage.module.scss';
 
 interface ActorPageProps {

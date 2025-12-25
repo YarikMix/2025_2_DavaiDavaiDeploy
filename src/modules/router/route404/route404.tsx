@@ -1,5 +1,5 @@
 import { Flex, Paragraph, Subhead, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { Link } from '../link';
 import styles from './route404.module.scss';
 

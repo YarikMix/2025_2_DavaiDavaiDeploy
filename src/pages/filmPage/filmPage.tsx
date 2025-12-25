@@ -17,7 +17,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
 import { Flex, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
 
 interface FilmPageProps {

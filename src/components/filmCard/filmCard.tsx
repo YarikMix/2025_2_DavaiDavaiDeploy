@@ -3,7 +3,7 @@ import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Badge, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './filmCard.module.scss';
 
 interface FilmCardProps {

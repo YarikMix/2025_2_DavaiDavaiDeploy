@@ -20,7 +20,7 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './calendarPageFilmCard.module.scss';
 
 interface CalendarPageFilmCardProps {

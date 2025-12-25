@@ -10,7 +10,7 @@ import { selectCalendarFilms } from '@/redux/features/calendar/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Flex, Subhead, Title } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { CalendarWidgetFilmCard } from '../calendarWidgetFilmCard/calendarWidgetFilmCard';

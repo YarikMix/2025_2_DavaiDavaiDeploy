@@ -4,7 +4,7 @@ import Success from '@/assets/img/success.svg';
 import type { ToastType } from '@/consts/toasts';
 import clsx from '@/modules/clsx';
 import { Flex, Headline } from '@/uikit/index';
-import { Component } from '@/modules/react';
+import { Component } from '@robocotik/react';
 import styles from './toast.module.scss';
 
 interface ToastProps {
