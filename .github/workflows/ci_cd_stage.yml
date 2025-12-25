@@ -50,9 +50,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/stage
-            git checkout ${{ github.ref_name }}  # Изменено здесь
-            git pull origin ${{ github.ref_name }}  # И здесь
+            cd /home/ubuntu/frontend/test
+            git fetch
+            git reset --hard origin/${{ github.ref_name }}
 
       - name: Deploy to S3
         uses: appleboy/ssh-action@master
@@ -61,7 +61,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/stage
+            cd /home/ubuntu/frontend/test
             
             source .env.stage
 
@@ -81,7 +81,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/stage
+            cd /home/ubuntu/frontend/test
   
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
             docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
