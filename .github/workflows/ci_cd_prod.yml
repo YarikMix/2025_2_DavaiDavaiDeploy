@@ -1,10 +1,6 @@
 name: Production flow
 
-on:
-  push:
-    branches:
-      - main
-      - develop
+on: push
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -170,7 +166,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/test
+            cd /home/ubuntu/frontend/prod
             git fetch
             git reset --hard origin/${{ github.ref_name }}
 
