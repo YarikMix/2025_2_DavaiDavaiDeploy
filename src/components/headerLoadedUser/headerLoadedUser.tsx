@@ -1,9 +1,7 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsUser } from '@/types/models.ts';
-import clsx from 'ddd-clsx';
+import { Avatar, Flex } from '@/uikit/index';
 import { Component } from 'ddd-react';
-import { Avatar, Flex } from 'ddd-ui-kit';
 import styles from './headerLoadedUser.module.scss';
 
 interface LoadedUserProps {
@@ -11,47 +9,21 @@ interface LoadedUserProps {
 	logoutUser: VoidFunction;
 }
 
-interface LoadedUserState {
-	isClosed: boolean;
-}
-
-export class LoadedUser extends Component<LoadedUserProps, LoadedUserState> {
-	state = {
-		isClosed: false,
-	};
-
-	handleAvatarClick = () => {
-		this.setState({ isClosed: !this.state.isClosed });
-	};
-
-	handleOpen = () => {
-		this.setState({ isClosed: false });
-	};
-
+export class LoadedUser extends Component<LoadedUserProps> {
 	render() {
 		return (
-			<Flex
-				className={styles.userInfo}
-				align="center"
-				data-test-id="user-avatar-container"
-			>
+			<Flex className={styles.userInfo} align="center">
 				<div className={styles.avatarContainer}>
-					{this.props.user?.avatar && (
-						<Avatar
-							src={getImageURL(this.props.user.avatar)}
-							alt={'avatar'}
-							className={styles.avatar}
-							level="9"
-							onClick={this.handleAvatarClick}
-							onMouseEnter={this.handleOpen}
-						/>
-					)}
+					<Avatar
+						src={this.props.user?.avatar}
+						alt={'avatar'}
+						className={styles.avatar}
+						level="9"
+					/>
 					<UserAvatar
 						user={this.props.user}
 						logoutUser={this.props.logoutUser}
-						className={clsx(styles.avatarActions, {
-							[styles.closed]: this.state.isClosed,
-						})}
+						className={styles.avatarActions}
 					/>
 				</div>
 			</Flex>

@@ -1,24 +1,20 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/genre/actions';
-import {
-	selectGenre,
-	selectGenreError,
-} from '@/redux/features/genre/selectors';
+import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Flex, Image, Paragraph, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
-import { Flex, Image, Paragraph, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import styles from './genreInfo.module.scss';
 
 interface GenreInfoProps {
-	genre: ModelsGenre;
+	genre: ModelsGenre | null;
 	error: string | null;
 	getGenre: (id: string) => void;
 }
@@ -31,16 +27,12 @@ class GenreInfoComponent extends Component<
 	}
 
 	render() {
-		if (this.props.error) {
+		if (!this.props.genre) {
 			return (
 				<Title className={styles.err} level="2" weight="bold" color="accent">
 					Жанр не найден
 				</Title>
 			);
-		}
-
-		if (!this.props.genre) {
-			return <div />;
 		}
 
 		const { title, description, icon } = this.props.genre;
@@ -52,7 +44,7 @@ class GenreInfoComponent extends Component<
 				align="center"
 				direction="column"
 			>
-				<Image src={getImageURL(icon)} alt={title} className={styles.title} />
+				<Image src={icon} alt={title} className={styles.title} />
 				<Paragraph className={styles.description} level="8" align="center">
 					{description}
 				</Paragraph>
@@ -63,7 +55,6 @@ class GenreInfoComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	genre: selectGenre(state),
-	error: selectGenreError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

@@ -1,4 +1,4 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
+import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,8 +13,6 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import clsx from 'ddd-clsx';
-import { Component } from 'ddd-react';
 import {
 	Avatar,
 	Button,
@@ -23,7 +21,8 @@ import {
 	Subhead,
 	Switch,
 	Title,
-} from 'ddd-ui-kit';
+} from '@/uikit/index';
+import { Component } from 'ddd-react';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
@@ -176,32 +175,30 @@ class ChangeAvatarComponent extends Component<
 		return (
 			<Flex className={styles.content} direction="row">
 				<Flex className={styles.text} direction="column" justify="between">
-					<Flex className={styles.wrap} direction="column" justify="between">
-						<Title className={styles.title} level="4" weight="bold">
-							Хочется чего-то нового? Обновите фото профиля
-						</Title>
-						<Flex className={styles.subtitle} direction="column">
-							<Subhead
-								color="light"
-								level="10"
-								opacity="70"
-								className={styles.subtitleText}
-							>
-								{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
-							</Subhead>
-							<Subhead
-								color="light"
-								level="10"
-								opacity="70"
-								className={styles.subtitleText}
-							>
-								Вес файла: не более 8МБ
-							</Subhead>
-						</Flex>
+					<Title className={styles.title} level="4" weight="bold">
+						Хочется чего-то нового? Обновите фото профиля
+					</Title>
+					<Flex className={styles.subtitle} direction="column">
+						<Subhead
+							color="light"
+							level="10"
+							opacity="70"
+							className={styles.subtitleText}
+						>
+							{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
+						</Subhead>
+						<Subhead
+							color="light"
+							level="10"
+							opacity="70"
+							className={styles.subtitleText}
+						>
+							Вес файла: не более 8МБ
+						</Subhead>
 					</Flex>
 					<Flex className={styles.otp} align="center">
 						<Switch
-							onChange={this.handleToggleOTP}
+							onClick={this.handleToggleOTP}
 							checked={this.props.OTPActivated}
 						/>
 						<p className={styles.otpText}>Двухфакторная аутентификация</p>
@@ -215,12 +212,13 @@ class ChangeAvatarComponent extends Component<
 							className={styles.avatar}
 							src={preview}
 							alt="Preview"
+							preview={true}
 						/>
 					) : (
 						<Avatar
 							level="6"
 							className={styles.avatar}
-							src={getImageURL(avatar)}
+							src={avatar}
 							alt="Аватар"
 						/>
 					)}

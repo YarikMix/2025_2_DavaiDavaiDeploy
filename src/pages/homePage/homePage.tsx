@@ -3,9 +3,8 @@ import { CompilationWidget } from '@/components/compilationWidget/compilationWid
 import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
-import { Recommendations } from '@/components/recommendations/recommendations';
+import { Flex } from '@/uikit/index';
 import { Component } from 'ddd-react';
-import { Flex } from 'ddd-ui-kit';
 import styles from './homePage.module.scss';
 
 export class HomePage extends Component {
@@ -16,7 +15,6 @@ export class HomePage extends Component {
 					<PromoFilm />
 					<GenreSlider />
 					<CompilationWidget />
-					<Recommendations />
 					<CalendarWidget />
 					<Flex className={styles.films} direction="column">
 						<FilmCardGrid />

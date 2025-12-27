@@ -16,6 +16,14 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 						dest: './',
 					},
 					{
+						src: 'src/assets/screenshots/',
+						dest: './assets',
+					},
+					{
+						src: 'src/assets/favicon/',
+						dest: './assets',
+					},
+					{
 						src: './robots.txt',
 						dest: './',
 					},
@@ -52,13 +60,12 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 		},
 		server: {
 			host: 'localhost',
-			port: 80,
+			port: 3000,
 			proxy: {
 				'/api': {
 					target: env.VITE_PRODUCTION_API_URL,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/api/, ''),
-					ws: true,
 				},
 			},
 		},

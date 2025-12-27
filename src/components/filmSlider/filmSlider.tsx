@@ -1,54 +1,50 @@
-import ArrowLeft from '@/assets/arrowLeft.svg?react';
-import ArrowRight from '@/assets/arrowRight.svg?react';
-import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
-import { debounce } from '@/helpers/debounceHelper/debounceHelper';
+import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
+import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import type { State } from '@/modules/redux/types/store.ts';
+import actions from '@/redux/features/actor/actions';
+import { selectActorFilms } from '@/redux/features/actor/selectors';
+import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from 'ddd-react';
-import { Flex, IconButton, Title } from 'ddd-ui-kit';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmSlider.module.scss';
 
 interface FilmSliderProps {
 	films: ModelsMainPageFilm[];
+	getFilms: (limit: number, offset: number, id: string) => void;
 }
 
 interface FilmSliderState {
 	curFilm: number;
-	slideCapacity: number;
-	cardHeight: number;
-	windowHeight: number;
-	active: boolean;
 	autoSlider: null | {
 		start: VoidFunction;
 		isWorking: () => boolean;
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
-	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
+const MIN_SLIDEABLE_COUNT = 2;
 const MIN_SLIDE_CAPACITY = 3;
-const DEBOUNCE_DELAY = 100;
+const MEDIUM_SLIDE_CAPACITY = 5;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
-const FILM_COUNT: number = 100;
+const FILM_COUNT: number = 50;
+const OFFSET: number = 0;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
 
-function getSlideCapacityFromWidth(width: number) {
-	if (width > WIDE_SCREEN_WIDTH) {
-		return MAX_SLIDE_CAPACITY;
-	} else if (width < NARROW_SCREEN_WIDTH) {
-		return MIN_SLIDE_CAPACITY;
-	}
-
-	return 5;
-}
-
 function getIsActive(slideCapacity: number) {
-	return slideCapacity >= MIN_SLIDE_CAPACITY;
+	return slideCapacity >= MIN_SLIDEABLE_COUNT;
 }
 
 function getCardHeight(slideCapacity: number) {
@@ -79,14 +75,12 @@ function getSliderHeight(
 	}
 }
 
-export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
+class FilmSliderComponent extends Component<
+	FilmSliderProps & WithRouterProps & WithAdaptivityProps,
+	FilmSliderState
+> {
 	state: FilmSliderState = {
 		curFilm: 0,
-		slideCapacity: getSlideCapacityFromWidth(window.innerWidth),
-		cardHeight: SMALL_CARD_HEIGHT,
-		active: false,
-		windowHeight: window.innerHeight,
-		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
 	};
@@ -96,12 +90,18 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		createRef<HTMLElement>(),
 	);
 
+	getSlideCapacityFromWidth() {
+		if (this.props.adaptivity.isWideDesktop) {
+			return MAX_SLIDE_CAPACITY;
+		} else if (this.props.adaptivity.isSmallTablet) {
+			return MEDIUM_SLIDE_CAPACITY;
+		}
+
+		return MIN_SLIDE_CAPACITY;
+	}
+
 	onMount() {
-		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
-
-		this.setState({ debounceResizeHandler });
-
-		window.addEventListener('resize', debounceResizeHandler);
+		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 
 		const autoSlider = createPeriodFunction(
 			() => this.next(),
@@ -112,16 +112,10 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			autoSlider,
 		});
 
-		if (this.state.active) {
-			autoSlider.start();
-		}
+		autoSlider.start();
 	}
 
 	onUnmount() {
-		if (this.state.debounceResizeHandler) {
-			window.removeEventListener('resize', this.state.debounceResizeHandler);
-		}
-
 		if (this.state.autoSlider) {
 			this.state.autoSlider.stop();
 		}
@@ -130,50 +124,6 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			clearTimeout(this.state.inactivityTimer);
 		}
 	}
-
-	onUpdate() {
-		if (
-			(!this.props.films || this.props.films.length === 0) &&
-			this.state.active
-		) {
-			this.setState({ active: false });
-		}
-
-		if (this.props.films.length > 1 && !this.state.active) {
-			this.handleResize();
-		}
-	}
-
-	handleResize = () => {
-		const width = window.innerWidth;
-		let slideCapacity = getSlideCapacityFromWidth(width);
-		const cardHeight = getCardHeight(slideCapacity);
-
-		if (this.props.films.length > 0) {
-			slideCapacity = Math.min(slideCapacity, this.props.films.length);
-		} else {
-			slideCapacity = 1;
-		}
-
-		const active = getIsActive(slideCapacity);
-
-		this.setState({
-			windowHeight: window.innerHeight,
-			slideCapacity,
-			cardHeight,
-			active,
-		});
-
-		if (!active && this.state.autoSlider) {
-			this.state.autoSlider.stop();
-		} else if (
-			active &&
-			this.state.autoSlider &&
-			!this.state.autoSlider.isWorking()
-		) {
-			this.state.autoSlider.start();
-		}
-	};
 
 	onSliderClick = () => {
 		if (this.state.autoSlider) {
@@ -194,19 +144,17 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	};
 
 	next = () => {
-		this.setState({
-			curFilm: (this.state.curFilm + 1) % this.props.films.length,
-		});
+		this.setState((state) => ({
+			curFilm: (state.curFilm + 1) % this.props.films.length,
+		}));
 	};
 
 	prev = () => {
-		this.setState({
+		this.setState((state) => ({
 			curFilm:
-				(this.state.curFilm - 1 + this.props.films.length) %
-				this.props.films.length,
-		});
+				(state.curFilm - 1 + this.props.films.length) % this.props.films.length,
+		}));
 	};
-
 	getSlideStyle(
 		zIndex: number,
 		opacity: number,
@@ -221,9 +169,10 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		};
 	}
 
-	getStyles = (index: number) => {
+	getStyles = (index: number, cardHeight: number, slideCapacity: number) => {
 		const total = this.props.films.length;
-		const stepPx = (window.innerWidth * this.state.cardHeight) / (100 * 1.7);
+		const stepPx = (this.props.adaptivity.viewWidth * cardHeight) / (100 * 1.7);
+
 		const curIndex = this.state.curFilm;
 
 		let diff = (index - curIndex + total) % total;
@@ -232,7 +181,7 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			diff -= total;
 		}
 
-		const maxVisible = (this.state.slideCapacity - 1) / 2;
+		const maxVisible = (slideCapacity - 1) / 2;
 
 		if (diff === 0) {
 			return this.getSlideStyle(10, 1, 0, 0, 0);
@@ -279,6 +228,26 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			slider.style.height = getSliderHeight(slider, slides) + 'px';
 		}
 
+		let slideCapacity = this.getSlideCapacityFromWidth();
+
+		if (this.props.films.length > 0) {
+			slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		}
+
+		const cardHeight = getCardHeight(slideCapacity);
+
+		const active = getIsActive(slideCapacity);
+
+		if (!active && this.state.autoSlider) {
+			this.state.autoSlider.stop();
+		} else if (
+			active &&
+			this.state.autoSlider &&
+			!this.state.autoSlider.isWorking()
+		) {
+			this.state.autoSlider.start();
+		}
+
 		return (
 			<div className={styles.content}>
 				<Title level="1" className={styles.title}>
@@ -291,31 +260,33 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 					direction="row"
 					align="top"
 				>
-					{this.state.active && (
-						<IconButton
-							mode="tertiary"
-							className={styles.prevBtn}
-							onClick={this.prev}
-						>
-							<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
-						</IconButton>
+					{active && (
+						<>
+							<IconButton
+								mode="tertiary"
+								className={styles.prevBtn}
+								onClick={this.prev}
+							>
+								<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
+							</IconButton>
+
+							<IconButton
+								mode="tertiary"
+								className={styles.nextBtn}
+								onClick={this.next}
+							>
+								<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
+							</IconButton>
+						</>
 					)}
-					{this.state.active && (
-						<IconButton
-							mode="tertiary"
-							className={styles.nextBtn}
-							onClick={this.next}
-						>
-							<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
-						</IconButton>
-					)}
+
 					<Flex className={styles.container} justify="center" align="start">
 						{this.props.films.map((film, i) => (
 							<div
 								key={film.id}
 								ref={this.slideRefMap[i]}
 								className={styles.slide}
-								style={{ ...this.getStyles(i) }}
+								style={{ ...this.getStyles(i, cardHeight, slideCapacity) }}
 							>
 								<FilmCard film={film} />
 							</div>
@@ -326,3 +297,18 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	films: selectActorFilms(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getFilms: (limit: number, offset: number, id: string) =>
+		dispatch(actions.getActorFilmsAction(limit, offset, id)),
+});
+
+export const FilmSlider = compose(
+	withRouter,
+	withAdaptivity,
+	connect(mapStateToProps, mapDispatchToProps),
+)(FilmSliderComponent);

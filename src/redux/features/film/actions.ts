@@ -4,7 +4,6 @@ import type {
 	ModelsFavFilm,
 	ModelsFilmFeedback,
 	ModelsFilmPage,
-	ModelsMainPageFilm,
 } from '@/types/models';
 import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
@@ -27,15 +26,6 @@ const setFilmLoadingAction = (): Action => {
 };
 
 /**
- * Action: начало загрузки похожих фильмов.
- */
-const setSimilarFilmsLoadingAction = (): Action => {
-	return {
-		type: actionTypes.SIMILAR_LOADING,
-	};
-};
-
-/**
  * Action: начало загрузки фидбэков.
  */
 const setFeedbacksLoadingAction = (): Action => {
@@ -51,16 +41,6 @@ const returnFilmAction = (data: ModelsFilmPage): Action => {
 	return {
 		type: actionTypes.FILM_LOADED,
 		payload: { film: data },
-	};
-};
-
-/**
- * Action: успешная загрузка похожих фильмов
- */
-const returnSimilarFilmsAction = (data: ModelsMainPageFilm[]): Action => {
-	return {
-		type: actionTypes.SIMILAR_LOADED,
-		payload: { films: data },
 	};
 };
 
@@ -95,16 +75,6 @@ const returnFeedbacksErrorAction = (error: string): Action => {
 };
 
 /**
- * Action: ошибка при загрузке похожих фильмов
- */
-const returnSimilarFilmsErrorAction = (error: string): Action => {
-	return {
-		type: actionTypes.SIMILAR_ERROR,
-		payload: { error: error },
-	};
-};
-
-/**
  * Thunk: асинхронная загрузка фильма с сервера.
  */
 const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
@@ -135,41 +105,6 @@ const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
 		});
 	}
 };
-
-/**
- * Thunk: асинхронная загрузка фильма с сервера.
- */
-const getSimilarFilmsAction: Action =
-	(id: string) => async (dispatch: Dispatch) => {
-		dispatch(setSimilarFilmsLoadingAction());
-
-		try {
-			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				`/films/${id}/similar`,
-			);
-
-			dispatch(returnSimilarFilmsAction(response.data));
-		} catch (error: unknown) {
-			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-			if (error instanceof Error) {
-				errorMessage = error.message;
-			} else if (typeof error === 'string') {
-				errorMessage = error;
-			}
-
-			dispatch(returnSimilarFilmsErrorAction(errorMessage));
-
-			Sentry.captureException(new Error('Ошибка ручки похожих фильмов'), {
-				tags: {
-					category: 'similar',
-				},
-				extra: {
-					error: errorMessage,
-				},
-			});
-		}
-	};
 
 /**
  * Thunk: асинхронная загрузка отзывов с сервера.
@@ -422,7 +357,6 @@ const addToFavoritesAction =
 export default {
 	getFilmAction,
 	getFeedbacksAction,
-	getSimilarFilmsAction,
 	addToFavoritesAction,
 	deleteFromFavoritesAction,
 	clearFilmAction,

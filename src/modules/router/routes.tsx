@@ -5,25 +5,6 @@ import { normalize } from './utils/normalize.ts';
 import { withRouter } from './withRouter.tsx';
 
 class RoutesNotConnected extends Component<WithRouterProps> {
-	getParams(
-		href: string,
-		match: RegExpMatchArray,
-		search: Record<string, string>,
-	) {
-		const params: Record<string, string> = {};
-		const paramNames = [...href.matchAll(/:(\w+)/g)].map((m) => m[1]);
-		paramNames.forEach((name, i) => {
-			params[name] = match[i + 1];
-		});
-
-		if (window.location.hash) {
-			const anchor = window.location.hash.slice(1);
-			return { ...params, ...search, anchor };
-		}
-
-		return { ...params, ...search };
-	}
-
 	getCurrChild() {
 		if (!this.props.children) {
 			return <Route404 />;
@@ -61,7 +42,14 @@ class RoutesNotConnected extends Component<WithRouterProps> {
 				const match = pathname.match(regex);
 
 				if (match) {
-					this.props.router.params = this.getParams(href, match, search);
+					let params: Record<string, string> = {};
+					const paramNames = [...href.matchAll(/:(\w+)/g)].map((m) => m[1]);
+					paramNames.forEach((name, i) => {
+						params[name] = match[i + 1];
+					});
+
+					params = { ...params, ...search };
+					this.props.router.params = params;
 					return child;
 				}
 			}

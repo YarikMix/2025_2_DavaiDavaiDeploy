@@ -68,6 +68,16 @@ const getFavoritesAction = (): Action => async (dispatch: Dispatch) => {
 };
 
 /**
+ * Вызов удаления фильма из избранного
+ */
+const processDeleteAction = (films: ModelsFavFilm[]): Action => {
+	return {
+		type: actionTypes.DELETE_FROM_FAVORITES,
+		payload: { films },
+	};
+};
+
+/**
  * Устанавливает состояние ошибки при удалении фильма из избранного
  */
 const returnDeleteErrorAction = (error: string): Action => {
@@ -84,7 +94,11 @@ const deleteFromFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.delete<ModelsFavFilm[]>(`/films/${id}/remove`);
+			const response = await HTTPClient.delete<ModelsFavFilm[]>(
+				`/films/${id}/remove`,
+			);
+
+			dispatch(processDeleteAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
@@ -110,51 +124,7 @@ const deleteFromFavoritesAction =
 		}
 	};
 
-/**
- * Устанавливает состояние ошибки при добавлении фильма в избранное
- */
-const returnAddErrorAction = (error: string): Action => {
-	return {
-		type: actionTypes.ADD_TO_FAVORITES_ERROR,
-		payload: { error },
-	};
-};
-
-/**
- * Добавляет фильм в избранное
- */
-const addToFavoritesAction =
-	(id: string): Action =>
-	async (dispatch: Dispatch) => {
-		try {
-			await HTTPClient.post<ModelsFavFilm[]>(`/films/${id}/save`);
-		} catch (error: unknown) {
-			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-			if (error instanceof Error) {
-				errorMessage = error.message;
-			} else if (typeof error === 'string') {
-				errorMessage = error;
-			}
-
-			dispatch(returnAddErrorAction(errorMessage));
-
-			Sentry.captureException(
-				new Error('Ошибка ручки добавления в избранное'),
-				{
-					tags: {
-						category: 'addToFav',
-					},
-					extra: {
-						error: errorMessage,
-					},
-				},
-			);
-		}
-	};
-
 export default {
 	getFavoritesAction,
 	deleteFromFavoritesAction,
-	addToFavoritesAction,
 };
