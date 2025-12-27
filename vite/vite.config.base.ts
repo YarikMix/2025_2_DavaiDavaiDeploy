@@ -13,10 +13,6 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 			viteStaticCopy({
 				targets: [
 					{
-						src: 'src/sw.js',
-						dest: './',
-					},
-					{
 						src: 'src/assets/screenshots/',
 						dest: './assets',
 					},
