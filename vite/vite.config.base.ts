@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -43,6 +44,45 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 					jsxFactory: 'jsx.jsx',
 					jsxFragment: 'Fragment',
 					jsxDev: false,
+				},
+			}),
+			VitePWA({
+				registerType: 'autoUpdate',
+				injectRegister: 'auto',
+
+				// Минимальный обязательный манифест
+				manifest: {
+					name: 'App',
+					short_name: 'App',
+					start_url: '.',
+					display: 'standalone',
+					theme_color: '#ffffff',
+					background_color: '#ffffff',
+					icons: [],
+				},
+				// Включить в dev режиме
+				devOptions: {
+					enabled: true,
+				},
+				workbox: {
+					globPatterns: ['**/*.{js,css,html}'],
+					cleanupOutdatedCaches: true,
+					skipWaiting: true,
+					clientsClaim: true,
+					runtimeCaching: [
+						{
+							urlPattern: /^https:\/\/ddfilms.online\/api\/.*/i,
+							handler: 'NetworkFirst',
+							options: {
+								cacheName: 'api-cache',
+								expiration: {
+									maxEntries: 100,
+									maxAgeSeconds: 5 * 60, // 5 минут
+								},
+								networkTimeoutSeconds: 10, // Таймаут сети
+							},
+						},
+					],
 				},
 			}),
 		],

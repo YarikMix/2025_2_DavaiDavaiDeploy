@@ -1,4 +1,5 @@
-type ValueType = string | number | readonly string[];
+/// <reference types="vite-plugin-pwa/client" />
+// type ValueType = string | number | readonly string[];
 
 declare global {
 	namespace JSX {

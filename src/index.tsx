@@ -15,7 +15,6 @@ import {
 	ToastContainer,
 } from './components/toastContainer/toastContainer.tsx';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
-import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL } from './consts/urls.ts';
 import { AdaptivityProvider } from './modules/adaptivity/AdaptivityProvider';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
@@ -40,6 +39,12 @@ import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
+import { registerSW } from 'virtual:pwa-register';
+
+if ('serviceWorker' in navigator) {
+	registerSW();
+}
+
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
@@ -48,15 +53,6 @@ if (sentryEnabled) {
 		tracePropagationTargets: [PRODUCTION_URL],
 		release: import.meta.env.VITE_RELEASE_VERSION,
 		environment: import.meta.env.MODE,
-	});
-}
-
-if (isSwEnabled && 'serviceWorker' in navigator) {
-	window.addEventListener('load', () => {
-		navigator.serviceWorker
-			.register('/sw.js', { scope: '/' })
-			// eslint-disable-next-line no-console
-			.catch(console.log);
 	});
 }
 
