@@ -1,5 +1,5 @@
 import type { ModelsCompilation } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Paragraph, Title } from 'ddd-ui-kit';
 import styles from './compilationInfo.module.scss';
 

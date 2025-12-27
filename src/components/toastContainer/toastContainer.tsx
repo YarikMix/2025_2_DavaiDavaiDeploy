@@ -1,7 +1,7 @@
 import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Toast } from 'ddd-ui-kit';
 import styles from './toastContainer.module.scss';
 

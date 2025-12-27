@@ -24,7 +24,7 @@ import type {
 	ModelsFilmPage,
 	ModelsMainPageFilm,
 } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
 import { Flex, Title } from 'ddd-ui-kit';
 import styles from './filmPage.module.scss';

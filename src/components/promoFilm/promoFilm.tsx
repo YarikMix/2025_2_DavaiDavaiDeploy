@@ -10,7 +10,7 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import {
 	Badge,
 	Flex,

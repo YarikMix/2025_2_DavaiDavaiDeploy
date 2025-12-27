@@ -1,5 +1,5 @@
-import type { ComponentType } from '@robocotik/react';
-import { Component } from '@robocotik/react';
+import type { ComponentType } from 'ddd-react';
+import { Component } from 'ddd-react';
 import { RouterContext } from './routerContext';
 import type { RouterContextValue } from './types/routerContext.ts';
 import type { WithRouterProps } from './types/withRouterProps.ts';

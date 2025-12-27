@@ -8,7 +8,7 @@ import { selectRecommendations } from '@/redux/features/films/selectors.js';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Component, createRef } from '@robocotik/react';
+import { Component, createRef } from 'ddd-react';
 import { FilmsLine } from '../filmsLine/filmsLine';
 import styles from './recommendations.module.scss';
 

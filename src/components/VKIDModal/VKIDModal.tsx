@@ -5,7 +5,7 @@ import {
 	selectVKIDAuthentificated,
 	selectvkidError,
 } from '@/redux/features/user/selectors';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Button, Flex } from 'ddd-ui-kit';
 import { ERROR_CODES } from '../../consts/errorCodes';
 import { vkidAuthorizationCodeToErrorHelper } from '../../helpers/vkidAuthorizationCodeToErrorHelper/vkidAuthorizationCodeToErrorHelper';

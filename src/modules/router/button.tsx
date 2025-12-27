@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Button } from 'ddd-ui-kit';
 import type { NavigateButtonProps } from './types/navigateButton.props.ts';
 import type { RouterContextValue } from './types/routerContext.ts';

@@ -15,7 +15,7 @@ import {
 } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Headline, Title } from 'ddd-ui-kit';
 import styles from './userPage.module.scss';
 

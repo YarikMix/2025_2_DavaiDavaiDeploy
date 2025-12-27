@@ -1,6 +1,6 @@
 import Close from '@/assets/close.svg?react';
 import Exit from '@/assets/exit.svg?react';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Button, Flex, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';

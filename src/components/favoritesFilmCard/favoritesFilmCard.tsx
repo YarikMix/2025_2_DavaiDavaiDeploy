@@ -12,7 +12,7 @@ import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/favorites/actions';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
 import {
 	Badge,

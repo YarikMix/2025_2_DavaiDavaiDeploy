@@ -7,7 +7,7 @@ import actions from '@/redux/features/calendar/actions';
 import { selectCalendarFilms } from '@/redux/features/calendar/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Title } from 'ddd-ui-kit';
 import styles from './calendarPage.module.scss';
 

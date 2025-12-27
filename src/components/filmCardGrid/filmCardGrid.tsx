@@ -8,7 +8,7 @@ import actions from '@/redux/features/films/actions';
 import { selectCursor, selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Component, createRef } from '@robocotik/react';
+import { Component, createRef } from 'ddd-react';
 import { CardGrid, Flex, Title } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';

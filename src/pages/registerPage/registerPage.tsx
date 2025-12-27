@@ -23,7 +23,7 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component, createRef } from '@robocotik/react';
+import { Component, createRef } from 'ddd-react';
 import * as VKID from '@vkid/sdk';
 import { Button, Flex, FormItem, Headline, Logo, Title } from 'ddd-ui-kit';
 import { ERROR_CODES } from '../../consts/errorCodes';

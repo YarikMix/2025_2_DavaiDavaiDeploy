@@ -1,6 +1,6 @@
 import Rutube from '@/assets/rutube.svg?react';
 import VkIcon from '@/assets/vk.svg?react';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Title } from 'ddd-ui-kit';
 import styles from './whereToWatch.module.scss';
 

@@ -1,6 +1,6 @@
 import Play from '@/assets/play.svg?react';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
 import { Image } from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';

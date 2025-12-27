@@ -1,7 +1,7 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageActor } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Image, Title } from 'ddd-ui-kit';
 import styles from './actorCard.module.scss';
 

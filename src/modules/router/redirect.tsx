@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import type { WithRouterProps } from './types/withRouterProps';
 import { withRouter } from './withRouter';
 

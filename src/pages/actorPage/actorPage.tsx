@@ -16,7 +16,7 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage, ModelsMainPageFilm } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex } from 'ddd-ui-kit';
 import styles from './actorPage.module.scss';
 

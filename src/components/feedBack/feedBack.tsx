@@ -6,7 +6,7 @@ import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import {
 	Avatar,
 	Flex,

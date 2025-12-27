@@ -2,7 +2,7 @@ import Exit from '@/assets/exit.svg?react';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
 import { Avatar, Flex, Headline, Separator } from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';

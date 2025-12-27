@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex, Paragraph, Subhead, Title } from 'ddd-ui-kit';
 import { Link } from '../link';
 import styles from './route404.module.scss';

@@ -4,7 +4,7 @@ import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
 import { Recommendations } from '@/components/recommendations/recommendations';
-import { Component } from '@robocotik/react';
+import { Component } from 'ddd-react';
 import { Flex } from 'ddd-ui-kit';
 import styles from './homePage.module.scss';
 
