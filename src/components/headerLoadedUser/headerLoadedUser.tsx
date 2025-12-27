@@ -1,8 +1,8 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import { Avatar, Flex } from 'ddd-ui-kit';
 import styles from './headerLoadedUser.module.scss';
 

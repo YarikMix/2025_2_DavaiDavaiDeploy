@@ -1,7 +1,7 @@
 import Play from '@/assets/play.svg?react';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
-import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import { Image } from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';

@@ -1,6 +1,6 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
-import { Component, createRef, type Ref } from 'ddd-react';
 import clsx from 'ddd-clsx';
+import { Component, createRef, type Ref } from 'ddd-react';
 import { Badge, Headline, Image } from 'ddd-ui-kit';
 import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper';

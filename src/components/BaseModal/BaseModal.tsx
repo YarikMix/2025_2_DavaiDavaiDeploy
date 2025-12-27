@@ -1,8 +1,8 @@
 import Close from '@/assets/close.svg?react';
 import { withModal } from '@/modules/modals/withModal';
 import type { WithModalProps } from '@/modules/modals/withModalProps';
-import { Component, createPortal } from 'ddd-react';
 import clsx from 'ddd-clsx';
+import { Component, createPortal } from 'ddd-react';
 import { Flex } from 'ddd-ui-kit';
 import style from './BaseModal.module.scss';
 

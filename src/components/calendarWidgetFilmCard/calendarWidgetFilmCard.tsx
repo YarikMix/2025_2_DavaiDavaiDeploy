@@ -12,8 +12,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import { Button, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './calendarWidgetFilmCard.module.scss';
 

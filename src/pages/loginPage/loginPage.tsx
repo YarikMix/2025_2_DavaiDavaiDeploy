@@ -24,8 +24,8 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component, createRef } from 'ddd-react';
 import * as VKID from '@vkid/sdk';
+import { Component, createRef } from 'ddd-react';
 import {
 	Button,
 	Flex,

@@ -24,8 +24,8 @@ import type {
 	ModelsFilmPage,
 	ModelsMainPageFilm,
 } from '@/types/models';
-import { Component } from 'ddd-react';
 import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import { Flex, Title } from 'ddd-ui-kit';
 import styles from './filmPage.module.scss';
 
