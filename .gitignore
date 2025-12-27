@@ -6,3 +6,4 @@ dist/
 .vite
 .env.production
 .env.local
+/dev-dist
