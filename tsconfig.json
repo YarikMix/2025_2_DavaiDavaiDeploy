@@ -23,13 +23,13 @@
 
 		// jsx
 		"jsx": "react-jsx",
-		"jsxImportSource": "ddd-react",
+		"jsxImportSource": "@robocotik/react",
 
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx"],
+	"include": ["**/*.ts", "**/*.tsx", "src/sw.js"],
 	"exclude": ["node_modules"]
 }

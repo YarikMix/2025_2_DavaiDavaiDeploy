@@ -1,14 +1,17 @@
-import close from '@/assets/img/close.svg';
-import userSvg from '@/assets/img/user.svg';
+import close from '@/assets/close.svg';
+import userSvg from '@/assets/user.svg';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
+import { ERROR_CODES } from '@/consts/errorCodes';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
+import { getPathWithFrom } from '@/helpers/getPathWithFrom/getPathWithFrom.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
 import { compose, connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
+import { Redirect } from '@/modules/router/redirect';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/user/actions.ts';
@@ -16,9 +19,13 @@ import {
 	selectIsTwoFactorEnabled,
 	selectUser,
 	selectUserErrorNot401,
+	selectvkidError,
 } from '@/redux/features/user/selectors.ts';
+import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component, createRef } from '@robocotik/react';
+import * as VKID from '@vkid/sdk';
 import {
 	Button,
 	Flex,
@@ -27,35 +34,45 @@ import {
 	Logo,
 	OTPInput,
 	Title,
-} from '@/uikit/index';
-import { Component } from 'ddd-react';
-import { ERROR_CODES } from '../../consts/errorCodes';
-import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
-import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
-import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
-import { Redirect } from '../../modules/router/redirect';
-import { store } from '../../redux/store';
+} from 'ddd-ui-kit';
+import { MODALS } from '../../modules/modals/modals';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
 	hasOTP: boolean;
+	vkidError: string;
+	vkAuthLogin: (access_token: string, login?: string) => void;
+	clearvkidError: () => void;
 	loginUser: (login: string, password: string) => void;
 	loginUserWithOTP: (login: string, password: string, otp: string) => void;
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps & WithAdaptivityProps
+	LoginPageProps & WithRouterProps & WithModalProps
 > {
 	state = {
 		username: '',
 		password: '',
+		showVideo: window.innerWidth >= 768,
 		validationErrors: {
 			username: '',
 			password: '',
 		},
 		errorShown: false,
+		accessToken: '',
+	};
+	oneTapContainer = createRef<HTMLButtonElement>();
+
+	handleResize = () => {
+		if (window.innerWidth < 768) {
+			this.setState({ showVideo: false });
+		} else {
+			this.setState({ showVideo: true });
+		}
 	};
 
 	hasOTP() {
@@ -79,6 +96,36 @@ export class LoginPageNotConnected extends Component<
 
 	onMount() {
 		store.dispatch(actions.resetUserError());
+		window.addEventListener('resize', this.handleResize);
+		const oneTap = new VKID.OneTap();
+		oneTap
+			.render({
+				container: this.oneTapContainer.current as HTMLElement,
+				styles: {
+					borderRadius: 16,
+					height: 56,
+				},
+			})
+			.on(
+				VKID.OneTapInternalEvents.LOGIN_SUCCESS,
+				(payload: VKID.AuthResponse) => {
+					const code = payload.code;
+					const deviceId = payload.device_id;
+					VKID.Auth.exchangeCode(code, deviceId)
+						.then(async (data) => {
+							this.state.accessToken = data.access_token;
+							this.props.vkAuthLogin(this.state.accessToken);
+						})
+
+						.catch(() => {
+							AppToast.error('Не удалось войти через ВКонтакте');
+						});
+				},
+			);
+	}
+
+	onUnmount() {
+		window.removeEventListener('resize', this.handleResize);
 	}
 
 	handleLoginUser = () => {
@@ -103,6 +150,17 @@ export class LoginPageNotConnected extends Component<
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}
+
+		if (
+			this.props.vkidError &&
+			this.props.vkidError === ERROR_CODES.PRECONDITION_FAILED.toString()
+		) {
+			this.props.modal.open(MODALS.VK_ID_MODAL, {
+				access_token: this.state.accessToken,
+				onSubmit: this.props.vkAuthLogin,
+				handleClearError: this.props.clearvkidError,
+			});
+		}
 	}
 
 	onFieldChange(value: string, field: 'username' | 'password') {
@@ -120,12 +178,10 @@ export class LoginPageNotConnected extends Component<
 	};
 
 	render() {
-		if (this.props.user) {
-			const redirectPath =
-				'from' in this.props.router.params
-					? this.props.router.params.from
-					: '/';
+		const redirectPath =
+			'from' in this.props.router.params ? this.props.router.params.from : '/';
 
+		if (this.props.user) {
 			return <Redirect to={redirectPath} />;
 		}
 
@@ -137,10 +193,10 @@ export class LoginPageNotConnected extends Component<
 					align="center"
 					justify="center"
 				>
-					<Link className={styles.closeLink} href="/">
+					<Link className={styles.closeLink} href={redirectPath}>
 						<img src={close} alt="close" />
 					</Link>
-					{this.props.adaptivity.isSmallTablet && (
+					{this.state.showVideo && (
 						<div className={styles.videoContainer}>
 							<video
 								src={getStaticURL('/video/login_signup.mp4')}
@@ -182,7 +238,6 @@ export class LoginPageNotConnected extends Component<
 							<FormItem
 								mode="primary"
 								top="Имя пользователя"
-								defaultValue=""
 								before={
 									<img src={userSvg} alt="icon" className={styles.inputIcon} />
 								}
@@ -192,7 +247,10 @@ export class LoginPageNotConnected extends Component<
 									this.state.validationErrors.username ? 'error' : 'default'
 								}
 								value={this.state.username}
-								onChange={(value) => this.onFieldChange(value, 'username')}
+								onChange={(value: string) =>
+									this.onFieldChange(value, 'username')
+								}
+								name="login"
 							/>
 							<PasswordInputField
 								mode="primary"
@@ -202,6 +260,7 @@ export class LoginPageNotConnected extends Component<
 								placeholder="Введите пароль"
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
+								name="password"
 							/>
 
 							{this.hasOTP() && (
@@ -220,9 +279,11 @@ export class LoginPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
+								type="submit"
 							>
 								Войти
 							</Button>
+							<div ref={this.oneTapContainer}></div>
 							<div className={styles.register__button}>
 								У меня нет аккаунта.{' '}
 								<Link
@@ -244,18 +305,21 @@ const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserErrorNot401(state),
 	hasOTP: selectIsTwoFactorEnabled(state),
+	vkidError: selectvkidError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	loginUser: (login: string, password: string) =>
 		dispatch(actions.loginUserAction(login, password)),
-
 	loginUserWithOTP: (login: string, password: string, otp: string) =>
 		dispatch(actions.loginUserAction(login, password, otp)),
+	vkAuthLogin: (access_token: string, login?: string) =>
+		dispatch(actions.vkidLoginUserAction(access_token, login)),
+	clearvkidError: () => dispatch(actions.clearvkidErrorAction()),
 });
 
 export const LoginPage = compose(
 	withRouter,
-	withAdaptivity,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);

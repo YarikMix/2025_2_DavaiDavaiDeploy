@@ -1,20 +1,19 @@
-import Close from '@/assets/img/close.svg?react';
-import Loupe from '@/assets/img/loupe.svg?react';
-import clsx from '@/modules/clsx/index.ts';
+import Close from '@/assets/close.svg?react';
+import Loupe from '@/assets/loupe.svg?react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
-import { Flex, IconButton } from '@/uikit/index';
-import { Component, createRef } from 'ddd-react';
+import { Component, createRef } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Flex, IconButton } from 'ddd-ui-kit';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
-import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
-import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import {
 	selectSearchResult,
+	selectVoiceIsWorking,
 	selectVoiceSearchResult,
 } from '../../redux/features/search/selectors';
 import type { ModelsSearchResponse } from '../../types/models';
@@ -23,6 +22,7 @@ import { SearchVoice } from '../SearchVoice/SearchVoice';
 import styles from './searchInput.module.scss';
 
 const DEBOUNCE_DELAY = 150;
+const DEBOUNCE_RESIZE_DELAY = 300;
 const MIN_SEARCH_LENGTH = 3;
 
 interface SearchInputProps {
@@ -34,27 +34,40 @@ interface SearchInputProps {
 	className: string;
 	hintResult: ModelsSearchResponse;
 	voiceSearchResult: ModelsSearchResponse;
+	isVoiceWorking: boolean;
 }
 
 interface SearchInputState {
 	searchRequest: string;
 	isSuggestVisible: boolean;
 	prevSearchRequest: string;
-	viewWidth: number;
 }
 
 class SearchInputComponent extends Component<
-	SearchInputProps & WithRouterProps & WithAdaptivityProps,
+	SearchInputProps & WithRouterProps,
 	SearchInputState
 > {
 	state: SearchInputState = {
 		searchRequest: '',
 		isSuggestVisible: false,
 		prevSearchRequest: '',
-		viewWidth: 0,
 	};
 
 	inputRef = createRef<HTMLInputElement>();
+
+	handleResize = () => {
+		this.setState({ isSuggestVisible: false });
+	};
+
+	debouncedResize = debounce(this.handleResize, DEBOUNCE_RESIZE_DELAY);
+
+	onMount() {
+		window.addEventListener('resize', this.debouncedResize);
+	}
+
+	onUnmount() {
+		window.removeEventListener('resize', this.debouncedResize);
+	}
 
 	onUpdate() {
 		if (
@@ -64,13 +77,6 @@ class SearchInputComponent extends Component<
 		) {
 			this.voiceSearch();
 			this.props.clearVoiceSearch();
-		}
-
-		if (this.state.viewWidth !== this.props.adaptivity.viewWidth) {
-			this.setState({
-				isSuggestVisible: false,
-				viewWidth: this.props.adaptivity.viewWidth,
-			});
 		}
 	}
 
@@ -154,7 +160,9 @@ class SearchInputComponent extends Component<
 							value={this.state.searchRequest}
 							onInput={this.handleSearchRequestChange}
 							className={styles.input}
+							name="search"
 							onKeyDown={this.handleKeyDown}
+							disabled={this.props.isVoiceWorking ? true : undefined}
 						></input>
 
 						<SearchVoice className={styles.loupeBtn} />
@@ -163,6 +171,7 @@ class SearchInputComponent extends Component<
 							mode="tertiary"
 							className={styles.loupeBtn}
 							onClick={this.search}
+							data-test-id="loupe"
 						>
 							<Loupe className={styles.loupe} />
 						</IconButton>
@@ -197,11 +206,13 @@ class SearchInputComponent extends Component<
 					<input
 						type="text"
 						ref={this.inputRef}
+						name="search"
 						placeholder="Поиск фильмов, актеров..."
 						value={this.state.searchRequest}
 						onInput={this.handleSearchRequestChange}
 						className={styles.input}
 						onKeyDown={this.handleKeyDown}
+						disabled={this.props.isVoiceWorking ? true : undefined}
 					></input>
 
 					<IconButton
@@ -226,6 +237,7 @@ class SearchInputComponent extends Component<
 const mapStateToProps = (state: State): Map => ({
 	hintResult: selectSearchResult(state),
 	voiceSearchResult: selectVoiceSearchResult(state),
+	isVoiceWorking: selectVoiceIsWorking(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
@@ -238,6 +250,5 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const SearchInput = compose(
 	withRouter,
-	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(SearchInputComponent);

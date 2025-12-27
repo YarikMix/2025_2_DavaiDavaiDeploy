@@ -1,11 +1,8 @@
-import { Toast } from '@/components/toast/toast';
+import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
-
-import { Flex } from '@/uikit/index';
-import { Component } from 'ddd-react';
-import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
-import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
-import { compose } from '../../modules/redux';
+import { debounce } from '@/helpers/debounceHelper/debounceHelper';
+import { Component } from '@robocotik/react';
+import { Flex, Toast } from 'ddd-ui-kit';
 import styles from './toastContainer.module.scss';
 
 interface ToastItem {
@@ -18,24 +15,46 @@ interface ToastItem {
 
 const REMOVE_DELAY = 1000;
 const ACTIVE_TIME = 4000;
+const DEBOUNCE_DELAY = 100;
+
+let maxToastNumber = window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
 
 interface ToastContainerState {
 	toasts: ToastItem[];
+	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
-export let AppToast: typeof ToastContainer = null;
+export let AppToast: ToastContainer = null as unknown as ToastContainer;
 
-class ToastContainerComponent extends Component<
-	WithAdaptivityProps,
-	ToastContainerState
-> {
+export class ToastContainer extends Component<{}, ToastContainerState> {
 	state: ToastContainerState = {
 		toasts: [],
+		debounceResizeHandler: () => {},
 	};
 
-	constructor(props: WithAdaptivityProps) {
-		super(props, null);
+	constructor() {
+		super({}, null);
 		AppToast = this;
+	}
+
+	onMount() {
+		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
+
+		this.setState({ debounceResizeHandler });
+
+		window.addEventListener('resize', debounceResizeHandler);
+
+		this.handleResize();
+	}
+
+	onUnmount() {
+		if (this.state.debounceResizeHandler) {
+			window.removeEventListener('resize', this.state.debounceResizeHandler);
+		}
+	}
+
+	handleResize() {
+		maxToastNumber = window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
 	}
 
 	success = (message: string) => {
@@ -61,8 +80,6 @@ class ToastContainerComponent extends Component<
 		newToast.timer = setTimeout(() => {
 			this.removeToast(newToast.id);
 		}, ACTIVE_TIME);
-
-		const maxToastNumber = this.props.adaptivity.isTablet ? 4 : 2;
 
 		this.setState((prevState) => {
 			const updatedToasts = [...prevState.toasts];
@@ -114,5 +131,3 @@ class ToastContainerComponent extends Component<
 		);
 	}
 }
-
-export const ToastContainer = compose(withAdaptivity)(ToastContainerComponent);

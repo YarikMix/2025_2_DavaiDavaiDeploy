@@ -24,7 +24,8 @@
     "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
     "prepare": "husky",
     "preview": "npm run build && vite preview",
-    "preview:stage": "npm run build:stage && vite preview --config vite/vite.config.stage.ts"
+    "preview:stage": "npm run build:stage && vite preview",
+    "allure:generate": "npx allure generate allure-results --clean"
   },
   "repository": {
     "type": "git",
@@ -44,12 +45,16 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
     "@fontsource/golos-ui": "^4.5.3",
+    "@robocotik/react": "^1.6.0",
     "@sentry/browser": "^10.21.0",
     "@sentry/core": "^10.21.0",
     "@sentry/vite-plugin": "^2.14.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
-    "ddd-react": "^1.4.0",
+    "@vkid/sdk": "^2.6.2",
+    "cypress-real-events": "^1.15.0",
+    "ddd-clsx": "^1.0.4",
+    "ddd-ui-kit": "^1.1.0",
     "extendable-media-recorder": "^9.2.31",
     "extendable-media-recorder-wav-encoder": "^7.0.132",
     "reset-css": "^5.0.2",
@@ -60,7 +65,10 @@
     "@stylistic/eslint-plugin": "^5.5.0",
     "@types/node": "^24.7.2",
     "@vitest/coverage-v8": "^3.2.4",
+    "allure-commandline": "^2.36.0",
+    "allure-cypress": "^3.4.3",
     "browserslist": "^4.26.3",
+    "cypress": "^15.7.1",
     "ember-template-lint": "^3.6.0",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
@@ -87,7 +95,6 @@
     "vite-plugin-pwa": "^1.1.0",
     "vite-plugin-static-copy": "^3.1.4",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4",
-    "workbox-window": "^7.4.0"
+    "vitest": "^3.2.4"
   }
 }

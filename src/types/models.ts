@@ -151,6 +151,7 @@ export interface ModelsFilmPage {
 	slogan?: string;
 	title: string;
 	trailer_url: string;
+	film_url: string;
 	user_rating?: number;
 	worldwide_fees: number;
 	year: number;
@@ -219,6 +220,7 @@ export interface ModelsUser {
 	login: string;
 	updated_at?: string;
 	version: number;
+	is_foreign: boolean;
 }
 
 export interface ModelsVoiceSearchResponse {
@@ -231,4 +233,17 @@ export interface ModelsOTPUser {
 	twoFactorLoading: boolean;
 	has_2fa: boolean;
 	qrCode: string | null;
+}
+
+export interface ModelsNotification {
+	id: uuid;
+	title: string;
+	text: string;
+	created_at: time;
+}
+
+export interface ModelsVKIDUser {
+	login: string;
+	avatar: string;
+	has_2fa: boolean;
 }

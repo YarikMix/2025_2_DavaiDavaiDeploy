@@ -6,18 +6,22 @@ import { store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
+import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
-import { Component, render } from 'ddd-react';
+import * as VKID from '@vkid/sdk';
+import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
+import Layout from './components/Layout/Layout';
 import {
 	AppToast,
 	ToastContainer,
 } from './components/toastContainer/toastContainer.tsx';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
+import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL } from './consts/urls.ts';
-import { AdaptivityProvider } from './modules/adaptivity/AdaptivityProvider';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
+import { NotificationManager } from './modules/notifications/notificationManager';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -35,15 +39,20 @@ import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
-import { selectUser } from './redux/features/user/selectors.ts';
+import {
+	selectIsAuthentificated,
+	selectIsChecked,
+	selectUser,
+} from './redux/features/user/selectors';
 import type { Map } from './types/map.ts';
-import type { ModelsUser } from './types/models.ts';
 
-import { registerSW } from 'virtual:pwa-register';
-
-if ('serviceWorker' in navigator) {
-	registerSW();
-}
+VKID.Config.init({
+	app: import.meta.env.VITE_VK_SDK_APP_ID,
+	redirectUrl: "",
+	source: VKID.ConfigSource.LOWCODE,
+	scope: 'email',
+	responseMode: VKID.ConfigResponseMode.Callback,
+});
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -56,8 +65,17 @@ if (sentryEnabled) {
 	});
 }
 
+if (isSwEnabled && 'serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker
+			.register('/sw.js', { scope: '/' })
+			// eslint-disable-next-line no-console
+			.catch(console.log);
+	});
+}
+
 window.addEventListener('online', () => {
-	AppToast.info('Соединение восстановлено1235!');
+	AppToast.info('Соединение восстановлено!');
 });
 
 window.addEventListener('offline', () => {
@@ -65,22 +83,43 @@ window.addEventListener('offline', () => {
 });
 
 interface AppProps {
-	user: ModelsUser;
+	isAuthentificated: boolean;
+	isChecked: boolean;
 	checkUser: () => {};
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
+
+		if (
+			NotificationManager.isSupported() &&
+			Notification.permission === 'default'
+		) {
+			NotificationManager.requestPermission();
+		}
+	}
+
+	onUpdate(): void | Promise<void> {
+		if (
+			!NotificationManager.hasWSConnection() &&
+			this.props.isAuthentificated
+		) {
+			NotificationManager.connect();
+		}
 	}
 
 	render() {
+		if (!this.props.isChecked) {
+			return <></>;
+		}
+
 		const isAuthPageOpen =
 			this.props.router.path.startsWith('/login') ||
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<div class="layout">
+			<Layout>
 				<ToastContainer />
 				{!isAuthPageOpen && <Header />}
 				<Routes>
@@ -96,7 +135,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/compilations/:id" component={<CompilationPage />} />
 				</Routes>
 				{!isAuthPageOpen && <Footer />}
-			</div>
+			</Layout>
 		);
 	}
 }
@@ -104,19 +143,19 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<ModalsProvider>
-				<Provider store={store}>
-					<AdaptivityProvider>
-						<RouterProvider>{this.props.children}</RouterProvider>
-					</AdaptivityProvider>
-				</Provider>
-			</ModalsProvider>
+			<Provider store={store}>
+				<ModalsProvider>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</ModalsProvider>
+			</Provider>
 		);
 	}
 }
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	isChecked: selectIsChecked(state),
+	isAuthentificated: selectIsAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

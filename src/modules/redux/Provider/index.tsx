@@ -1,4 +1,4 @@
-import { Component } from 'ddd-react';
+import { Component } from '@robocotik/react';
 import { StoreContext } from '../connect';
 import type { Store } from '../types/store';
 

@@ -11,7 +11,10 @@ interface InitialState {
 	passwordChangeError: string | null;
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
-	newAvatarLoading: false;
+	newAvatarLoading: boolean;
+	isChecked: boolean;
+	vkidError: string | null;
+	VKIDAuthentificated: boolean;
 }
 
 /**
@@ -26,6 +29,9 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
+	isChecked: false,
+	vkidError: null,
+	VKIDAuthentificated: false,
 };
 
 /**
@@ -48,6 +54,7 @@ export const userReducer: Reducer = (
 				...state,
 				loading: false,
 				user: payload.user,
+				VKIDAuthentificated: payload.user.is_foreign,
 			};
 		case actionTypes.USER_UPDATE:
 			return {
@@ -175,6 +182,40 @@ export const userReducer: Reducer = (
 					error: payload.error,
 					twoFactorLoading: false,
 				},
+			};
+
+		case actionTypes.USER_CHECKED:
+			return {
+				...state,
+				isChecked: true,
+			};
+		case actionTypes.VKID_USER_LOADED:
+			return {
+				...state,
+				user: {
+					...state.user,
+					...payload.user,
+				},
+				VKIDAuthentificated: true,
+				vkidError: null,
+			};
+		case actionTypes.VKID_USER_ERROR:
+			return {
+				...state,
+				user: {
+					...state.user,
+				},
+				vkidError: payload.error,
+				VKIDAuthentificated: false,
+			};
+
+		case actionTypes.VKID_USER_ERROR_CLEAR:
+			return {
+				...state,
+				user: {
+					...state.user,
+				},
+				vkidError: null,
 			};
 		default:
 			return state;

@@ -1,4 +1,4 @@
-import { Component, createContext, type ComponentType } from 'ddd-react';
+import { Component, createContext, type ComponentType } from '@robocotik/react';
 import type { Dispatch } from '../types/actions';
 import type { State, Store } from '../types/store';
 

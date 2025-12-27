@@ -9,21 +9,42 @@ import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts'
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/favorites/actions';
 import { selectFavorites } from '@/redux/features/favorites/selectors';
-import { selectIsAuthentificated } from '@/redux/features/user/selectors';
+import {
+	selectIsAuthentificated,
+	selectVKIDAuthentificated,
+} from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Flex, Headline, Title } from '@/uikit/index';
-import { Component } from 'ddd-react';
+import { Component } from '@robocotik/react';
+import { Flex, Headline, Title } from 'ddd-ui-kit';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
 	isAuthentificated: boolean;
 	favoriteFilms: ModelsFavFilm[];
 	getFavorites: VoidFunction;
+	isVKIDAuthentificated: boolean;
 }
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	onMount() {
+		if (this.props.router.params.anchor) {
+			const anchorElement = document.querySelector(
+				`#${this.props.router.params.anchor}`,
+			);
+
+			if (!anchorElement) {
+				return;
+			}
+
+			const { top } = anchorElement.getBoundingClientRect();
+			const height = top - window.innerHeight * 0.2;
+			window.scrollTo({
+				top: height,
+				behavior: 'smooth',
+			});
+		}
+
 		this.props.getFavorites();
 	}
 
@@ -41,13 +62,13 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 				</Title>
 				<Flex className={styles.profile} direction="row" align="start">
 					<ChangeAvatar />
-					<ChangePassword />
+					{!this.props.isVKIDAuthentificated && <ChangePassword />}
 				</Flex>
 				<Flex className={styles.favorites} direction="column" align="center">
-					<Title className={styles.title} level="2">
+					<Title className={styles.title} level="2" id="favorites">
 						Избранное
 					</Title>
-					{favoriteFilms && favoriteFilms.length == 0 && (
+					{(!favoriteFilms || (favoriteFilms && favoriteFilms.length == 0)) && (
 						<Headline className={styles.subtitle} level="7" align="center">
 							Похоже, вы ничего не добавили в избранное
 						</Headline>
@@ -72,6 +93,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 const mapStateToProps = (state: State): Map => ({
 	isAuthentificated: selectIsAuthentificated(state),
 	favoriteFilms: selectFavorites(state),
+	isVKIDAuthentificated: selectVKIDAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

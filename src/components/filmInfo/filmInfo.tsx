@@ -1,9 +1,10 @@
-import Favorite from '@/assets/img/favorite.svg?react';
+import Favorite from '@/assets/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -14,6 +15,8 @@ import actions from '@/redux/features/film/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import {
 	Badge,
 	Button,
@@ -23,9 +26,10 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from 'ddd-react';
+} from 'ddd-ui-kit';
 import { FilmRating } from '../filmRating/filmRating';
+import { Trailer } from '../Trailer/Trailer';
+import { WhereToWatch } from '../whereToWatch/whereToWatch';
 import styles from './filmInfo.module.scss';
 
 interface FilmInfoProps {
@@ -48,7 +52,9 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 		}
 
 		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/login');
+			this.props.router.navigate(
+				getPathWithPath('login', this.props.router.path),
+			);
 		}
 
 		if (film.is_liked) {
@@ -91,6 +97,8 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			poster,
 			is_liked,
 			is_out,
+			film_url,
+			trailer_url,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -104,7 +112,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			<Flex className={styles.film} direction="column">
 				<div className={styles.container}>
 					<Image
-						src={poster}
+						src={getImageURL(poster)}
 						alt={title || 'Poster'}
 						className={styles.image}
 					/>
@@ -119,7 +127,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 					>
 						<Flex className={styles.media} align="start" justify="center">
 							<Image
-								src={cover}
+								src={getImageURL(cover)}
 								alt={title || 'Cover'}
 								className={styles.cover}
 							/>
@@ -135,6 +143,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 						</Flex>
 						<Button
 							mode="secondary"
+							data-test-id="fav-btn"
 							className={clsx(styles.favBtn, {
 								[styles.inFav]: is_liked,
 								[styles.notInFav]: !is_liked,
@@ -144,6 +153,13 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							<Favorite className={styles.favIcon} />
 							<Headline level="7">Избранное</Headline>
 						</Button>
+						{trailer_url && (
+							<Trailer
+								src={this.props.film.poster}
+								className={styles.trailerPreviewPC}
+								videoSrc={trailer_url}
+							/>
+						)}
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -238,18 +254,28 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 									direction="column"
 									align="center"
 								>
-									{is_out && <FilmRating film={this.props.film} />}
+									{is_out && this.props.isAuthentificated && (
+										<FilmRating film={this.props.film} />
+									)}
 									<Button
 										mode="secondary"
 										className={clsx(styles.smallFavBtn, {
 											[styles.inFav]: is_liked,
 											[styles.notInFav]: !is_liked,
+											[styles.isAuth]: this.props.isAuthentificated,
 										})}
 										onClick={this.handleFavorites}
 									>
 										<Favorite className={styles.favIcon} />
 										<Headline level="7">Избранное</Headline>
 									</Button>
+									{trailer_url && (
+										<Trailer
+											src={this.props.film.poster}
+											videoSrc={trailer_url}
+											className={styles.trailerPreviewMobile}
+										/>
+									)}
 								</Flex>
 
 								{description && (
@@ -263,6 +289,8 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 								{is_out && <FilmRating film={this.props.film} />}
 							</Flex>
 						</Flex>
+
+						<WhereToWatch url={film_url} />
 
 						<Flex
 							className={styles.secondRow}
