@@ -48,8 +48,7 @@ import type { Map } from './types/map.ts';
 
 VKID.Config.init({
 	app: import.meta.env.VITE_VK_SDK_APP_ID,
-	redirectUrl: '',
-	source: VKID.ConfigSource.LOWCODE,
+	redirectUrl: import.meta.env.VITE_VK_ID_REDIRECT_URL,
 	scope: 'email',
 	responseMode: VKID.ConfigResponseMode.Callback,
 });
@@ -96,7 +95,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			NotificationManager.isSupported() &&
 			Notification.permission === 'default'
 		) {
-			NotificationManager.requestPermission();
+			void NotificationManager.requestPermission();
 		}
 	}
 
