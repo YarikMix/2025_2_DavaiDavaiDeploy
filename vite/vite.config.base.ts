@@ -91,7 +91,6 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 					enabled: true,
 				},
 				workbox: {
-					globPatterns: ['**/*.{js,css,html}'],
 					cleanupOutdatedCaches: true,
 					skipWaiting: true,
 					clientsClaim: true,
