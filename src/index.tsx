@@ -48,7 +48,7 @@ import type { Map } from './types/map.ts';
 
 VKID.Config.init({
 	app: import.meta.env.VITE_VK_SDK_APP_ID,
-	redirectUrl: "",
+	redirectUrl: '',
 	source: VKID.ConfigSource.LOWCODE,
 	scope: 'email',
 	responseMode: VKID.ConfigResponseMode.Callback,
