@@ -6,8 +6,8 @@ import { store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
-import { Component, render } from 'ddd-react';
 import * as Sentry from '@sentry/browser';
+import { Component, render } from 'ddd-react';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
 import {
