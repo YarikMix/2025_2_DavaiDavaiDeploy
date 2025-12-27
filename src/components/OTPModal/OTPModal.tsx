@@ -20,7 +20,7 @@ export class OTPModalComponent extends Component<
 			URL.revokeObjectURL(this.props.qrCode);
 		}
 
-		AppToast.success('2FA успешно подключена123');
+		AppToast.success('2FA успешно подключена1234');
 	};
 	render() {
 		return (

@@ -1,8 +1,8 @@
-name: Stage flow
+name: Production flow
 
 on:
   push:
-    branches-ignore:
+    branches:
       - main
       - develop
 
@@ -70,7 +70,7 @@ jobs:
 
             🔗 Ссылка на пайплайн 🔗
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
+        
   prettier-check:
     name: Prettier check
     runs-on: ubuntu-latest
@@ -156,7 +156,7 @@ jobs:
   deploy:
     name: Deploy to Server
     runs-on: ubuntu-latest
-    needs:
+    needs: 
       - install-cache
       - eslint-check
       - prettier-check
@@ -170,7 +170,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/stage
+            cd /home/ubuntu/frontend/test
             git fetch
             git reset --hard origin/${{ github.ref_name }}
 
@@ -181,18 +181,18 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/stage
+            cd /home/ubuntu/frontend/test
             
-            source .env.stage
-
-            docker build -f Dockerfile.stage \
+            source .env.production
+            
+            docker build -f Dockerfile.prod \
             --target deploy \
             --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
             --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
             --build-arg S3_BUCKET=$S3_BUCKET \
             --build-arg AWS_ENDPOINT=$AWS_ENDPOINT \
-            -t frontend-stage:latest .
+            -t frontend-prod:latest .
 
       - name: Build frontend
         uses: appleboy/ssh-action@master
@@ -201,12 +201,12 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/frontend/stage
-  
-            docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
-            docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
-            docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
-      
+            cd /home/ubuntu/frontend/test
+            
+            docker compose -f docker-compose.prod.yml down -v
+            docker compose --env-file .env.production -f docker-compose.prod.yml build --no-cache
+            docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+
       - name: Send failure notification
         if: failure()
         uses: PacificPromise/macos-telegram-action@main
@@ -228,8 +228,8 @@ jobs:
         with:
           type: topic
           message: |
-            🔔 Frontend (Stage)
+            🔔 Frontend (Production)
             ✅ Изменения успешно задеплоены
 
             🔗 Ссылка 🔗
-            ${{ secrets.STAGE_URL || 'Отсутствует' }}
+            ${{ secrets.PRODUCTION_URL || 'Отсутствует' }}
