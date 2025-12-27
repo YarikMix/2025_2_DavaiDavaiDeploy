@@ -50,16 +50,46 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 				registerType: 'autoUpdate',
 				injectRegister: 'auto',
 
-				// Минимальный обязательный манифест
+				includeAssets: ['assets/favicon-86x86.png'],
+				outDir: 'dist/assets',
+				manifestFilename: 'assets/prod/manifest.webmanifest',
 				manifest: {
-					name: 'App',
-					short_name: 'App',
-					start_url: '.',
-					display: 'standalone',
-					theme_color: '#ffffff',
+					name: 'DDFilms - Онлайн кинотеатр',
+					short_name: 'DDFilms',
+					description: 'Смотрите фильмы и сериалы онлайн',
+					theme_color: '#1976d2',
 					background_color: '#ffffff',
-					icons: [],
+					display: 'standalone',
+					start_url: env.VITE_PRODUCTION_URL,
+					scope: env.VITE_PRODUCTION_URL,
+					icons: [
+						{
+							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon.png`,
+							sizes: '180x180',
+							type: 'image/png',
+						},
+						{
+							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/favicon-144x144.png`,
+							sizes: '144x144',
+							type: 'image/png',
+						},
+					],
+					screenshots: [
+						{
+							src: '/assets/screenshots/screenshot-narrow.png',
+							type: 'image/png',
+							sizes: '538x819',
+							form_factor: 'narrow',
+						},
+						{
+							src: '/assets/screenshots/screenshot-wide.png',
+							type: 'image/png',
+							sizes: '1899x1027',
+							form_factor: 'wide',
+						},
+					],
 				},
+
 				// Включить в dev режиме
 				devOptions: {
 					enabled: true,
@@ -70,6 +100,20 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 					skipWaiting: true,
 					clientsClaim: true,
 					runtimeCaching: [
+						{
+							urlPattern: ({ request }) =>
+								request.destination === 'document' ||
+								request.destination === 'script' ||
+								request.destination === 'style',
+							handler: 'CacheFirst',
+							options: {
+								cacheName: 'static-resources',
+								expiration: {
+									maxEntries: 50,
+									maxAgeSeconds: 30 * 24 * 60 * 60, // 30 дней
+								},
+							},
+						},
 						{
 							urlPattern: /^https:\/\/ddfilms.online\/api\/.*/i,
 							handler: 'NetworkFirst',
