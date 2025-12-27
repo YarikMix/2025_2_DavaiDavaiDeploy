@@ -39,12 +39,6 @@ import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
-import { registerSW } from 'virtual:pwa-register';
-
-if ('serviceWorker' in navigator) {
-	registerSW();
-}
-
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
