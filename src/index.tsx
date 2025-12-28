@@ -51,7 +51,7 @@ if (sentryEnabled) {
 }
 
 window.addEventListener('online', () => {
-	AppToast.info('Соединение восстановлено1234567!');
+	AppToast.info('Соединение восстановлено12345678!');
 });
 
 window.addEventListener('offline', () => {
