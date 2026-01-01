@@ -7,5 +7,6 @@ export default {
 		'npm run lint:stylelint:fix',
 		'npm run lint:prettier:fix',
 	],
-	'*.{ts,tsx}': () => 'npm run tsc:check',
-};
+	'*.{json,md,html,yaml,yml}': ['npm run lint:prettier:fix'],
+	'*.hbs': 'npm run lint:prettier:fix',
+}

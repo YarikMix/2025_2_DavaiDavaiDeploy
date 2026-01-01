@@ -2,8 +2,3 @@
 node_modules/
 build/
 src/build/
-dist/
-.vite
-.env.production
-.env.local
-/dev-dist
