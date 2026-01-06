@@ -1,10 +1,11 @@
-import { serverAddrForStatic } from '../../consts/serverAddr.js'
-import { createPeriodFunction } from '../../helpers/periodStartHelper/periodStartHelper.js'
+import { serverAddrForStatic } from '@/consts/serverAddr.js'
+import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.js'
 import router from '../../modules/router/index.js'
-import genreActions from '../../redux/features/genre/actions.js'
-import { selectGenreSection } from '../../redux/features/genre/selectors.js'
-import { store } from '../../redux/store.js'
-import Component from '../core/baseComponent.js'
+import { selectGenreSection } from '@/redux/features/genre/selectors.js'
+import { store } from '@/redux/store.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
+import template from "./genreSlider.hbs"
+import { fetchGenres } from '@/redux/features/genre/slice.js'
 
 const AUTO_SLIDE_DURATION = 7000
 const AUTO_SLIDE_RESTART_DURATION = 30000
@@ -24,7 +25,7 @@ export default class GenreSlider extends Component {
 	 * @param {Object} [props={}] Дополнительные свойства компонента
 	 */
 	constructor(parent, props = {}) {
-		super(parent, props, 'genreSlider', {
+		super(parent, props, {
 			curSlide: 0,
 			slideCapacity: 8,
 			slideCount: 3,
@@ -69,8 +70,8 @@ export default class GenreSlider extends Component {
 	 * Рендерит слайдер и подписывается на обновления состояния Redux.
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('afterbegin', this.html())
-		store.dispatch(genreActions.getGenresAction())
+		this.parent.insertAdjacentHTML('afterbegin', template())
+		store.dispatch(fetchGenres())
 
 		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 

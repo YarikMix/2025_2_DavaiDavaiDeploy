@@ -1,4 +1,4 @@
-import { compose } from '../compose/index.js'
+import { compose } from "../compose/index.js"
 
 /**
  * Применяет middleware к Redux-подобному store.
@@ -8,14 +8,16 @@ import { compose } from '../compose/index.js'
  */
 export function applyMiddleware(middlewares) {
 	return function createStoreWithMiddleware(createStore) {
-		return (reducer, initialState) => {
-			const store = createStore(reducer, initialState)
+		return reducer => {
+			const store = createStore(reducer)
 
 			const middlewareAPI = {
 				getState: store.getState,
 				dispatch: action => store.dispatch(action),
 			}
-			const chain = middlewares.map(middleware => middleware(middlewareAPI))
+			const chain = middlewares.map(middleware =>
+				middleware(middlewareAPI),
+			)
 			const enhancedDispatch = compose(...chain)(store.dispatch)
 
 			return {

@@ -1,10 +1,9 @@
-import { serverAddr } from '../../consts/serverAddr.js'
-import { HTTPClient } from './HTTPClient.js'
+import { HTTPClient } from '@/modules/HTTPClient/HTTPClient.js'
 
 const TIMEOUT = 1000
 
 export default HTTPClient.create({
-	baseUrl: serverAddr,
+	baseUrl: "/api",
 	headers: {},
 	timeout: TIMEOUT,
 })

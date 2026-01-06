@@ -1,11 +1,11 @@
-import { formatDuration } from '../../helpers/durationFormatHelper/durationFormatHelper.js'
-import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper.js'
-import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper.js'
-import Component from '../core/baseComponent.js'
+import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper.js'
+import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper.js'
+import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
 
 export default class TopFilm extends Component {
 	constructor(parent, props = {}) {
-		super(parent, props, 'topFilm')
+		super(parent, props)
 	}
 
 	get self() {
@@ -23,6 +23,6 @@ export default class TopFilm extends Component {
 			rating: formatRating(this.props.rating),
 			ratingType: getRatingType(this.props.rating),
 		}
-		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
+		this.parent.insertAdjacentHTML('afterbegin', template(context))
 	}
 }

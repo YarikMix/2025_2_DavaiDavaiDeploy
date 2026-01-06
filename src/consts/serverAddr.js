@@ -1,4 +1,4 @@
-import { isProduction } from './../env.js'
+const isProduction = import.meta.env.VITE_IS_PRODUCTION === 'true'
 
 export const serverAddr = isProduction
 	? 'https://ddfilms.online/api'

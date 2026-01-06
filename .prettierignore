@@ -1,12 +1,8 @@
 # Ignore artifacts:
-build
+dist
 node_modules
 package.json
-package-lock.json
+yarn.json
 **/.git
-**/.svn
-**/.hg
-**/*.hbs
-**/node_modules
-src/modules/handlebars/**
-src/build/
+.idea
+.github

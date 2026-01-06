@@ -17,7 +17,7 @@ export default defineConfig([
 		},
 		rules: {
 			'no-unused-vars': 'error',
-			'no-undef': 'error',
+			'no-undef': 'off',
 			curly: 'error',
 			'compat/compat': 'error',
 			'no-console': 'error',
@@ -25,10 +25,9 @@ export default defineConfig([
 		},
 		ignores: [
 			'node_modules/',
-			'src/modules/handlebars/**',
-			'**/build/**',
-			'.template-lintrc.js',
-			'.lintstagedrc.js',
+			".template-lintrc.js",
+			".lintstagedrc.js",
+			"vite.config.js",
 		],
 	},
 ])

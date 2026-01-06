@@ -1,1 +1,1 @@
-export const selectGenreSection = state => state.genre
+export const selectGenreSection = state => state.genres.genre

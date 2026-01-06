@@ -1,13 +1,14 @@
 import router from '../../modules/router/index.js'
-import { selectUser } from '../../redux/features/user/selectors.js'
-import { store } from '../../redux/store.js'
-import Component from '../core/baseComponent.js'
+import { selectUser } from '@/redux/features/user/selectors.js'
+import { store } from '@/redux/store.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
+import template from "./header.hbs"
 
 export default class Header extends Component {
 	#unsubscribe
 
 	constructor(parent, props = {}) {
-		super(parent, props, 'header', {
+		super(parent, props, {
 			authorized: false,
 		})
 		this.#unsubscribe = null
@@ -41,7 +42,7 @@ export default class Header extends Component {
 			avatar: this.props.avatar,
 			login: this.props.login,
 		}
-		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
+		this.parent.insertAdjacentHTML('afterbegin', template(context))
 
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
@@ -64,7 +65,7 @@ export default class Header extends Component {
 			avatar: this.props.avatar,
 			login: this.props.login,
 		}
-		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
+		this.parent.insertAdjacentHTML('afterbegin', template(context))
 
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {

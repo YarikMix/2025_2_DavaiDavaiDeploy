@@ -1,8 +1,13 @@
-import { applyMiddleware, createStore } from '../modules/redux/index.js'
-import { reducer } from './features/index.js'
-import { middlewares } from './middlewares/index.js'
+import { combineReducers, configureStore } from '../modules/redux/index.js'
+import thunk from "../modules/redux/thunk/index.js"
+import filmsReducer from "./features/film/slice.js"
+import genresReducer from "./features/genre/slice.js"
+import userReducer from "./features/user/slice.js"
 
-const initialState = {}
+export const reducer = combineReducers({
+	films: filmsReducer,
+	genres: genresReducer,
+	user: userReducer
+})
 
-const createStoreWithMiddleware = applyMiddleware(middlewares)(createStore)
-export const store = createStoreWithMiddleware(reducer, initialState)
+export const store = configureStore({ reducer, middleware: [thunk] })

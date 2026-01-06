@@ -103,7 +103,7 @@ export class HTTPClient {
 	async _request({ method = METHODS.GET, path, params = {}, data = {} }) {
 		const requestMethod = method.toUpperCase()
 
-		let requestUrl = new URL(this.default.baseUrl + path)
+		let requestUrl = new URL(this.default.baseUrl + path, window.location.origin)
 
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {

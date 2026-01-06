@@ -1,2 +1,1 @@
-export const selectFilms = state => state.film.films
-export const selectFilmSection = state => state.film
+export const selectFilms = state => state.films.films

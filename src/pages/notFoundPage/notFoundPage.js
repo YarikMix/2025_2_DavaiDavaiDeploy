@@ -1,4 +1,6 @@
-import Page from '../core/basePage.js'
+import Page from '../../modules/lib/basePage/basePage.js'
+import template from "./notFoundPage.hbs"
+
 /**
  * Класс, представляющий страницу 404 (не найдено).
  */
@@ -6,9 +8,10 @@ export default class NotFoundPage extends Page {
 	/**
 	 * Создает экземпляр страницы 404.
 	 * @param {HTMLElement} rootElement Родительский элемент, в который рендерится страница.
+	 * @param {Object} location Объект локации
 	 */
 	constructor(rootElement, location) {
-		super(rootElement, location, 'notFoundPage')
+		super(rootElement, location)
 	}
 
 	/**
@@ -17,6 +20,6 @@ export default class NotFoundPage extends Page {
 	 */
 	render() {
 		this.parent.innerHTML = ''
-		this.parent.insertAdjacentHTML('afterbegin', this.template())
+		this.parent.insertAdjacentHTML('afterbegin', template())
 	}
 }

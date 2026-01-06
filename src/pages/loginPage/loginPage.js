@@ -1,12 +1,12 @@
 import LoginForm from '../../components/loginForm/loginForm.js'
 import router from '../../modules/router/index.js'
-import actions from '../../redux/features/user/actions.js'
 import {
-	selectError,
 	selectUserError,
-} from '../../redux/features/user/selectors.js'
-import { store } from '../../redux/store.js'
-import Page from '../core/basePage.js'
+} from '@/redux/features/user/selectors.js'
+import { store } from '@/redux/store.js'
+import Page from '../../modules/lib/basePage/basePage.js'
+import template from "./loginPage.hbs"
+import { loginUserAction } from '@/redux/features/user/slice.js'
 
 /**
  * Класс для отображения страницы входа.
@@ -14,20 +14,19 @@ import Page from '../core/basePage.js'
 export default class LoginPage extends Page {
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
+	 * @param {Object} location Объект локации
 	 */
 	constructor(rootElement, location) {
-		super(rootElement, location, 'loginPage')
+		super(rootElement, location)
 	}
 
 	onSubmit = (login, password) => {
-		store.dispatch(actions.loginUserAction(login, password))
+		store.dispatch(loginUserAction(login, password))
 	}
 
 	handleStoreChange = () => {
 		if (!selectUserError(store.getState())) {
 			router.navigate('/')
-		} else {
-			alert('Произошла ошибка ЛОГИНИЗАЦИИ: ' + selectError(store.getState()))
 		}
 		this.unsubscribe?.()
 	}
@@ -39,7 +38,7 @@ export default class LoginPage extends Page {
 		this.parent.innerHTML = ''
 		this.parent.insertAdjacentHTML(
 			'afterbegin',
-			this.template({
+			template({
 				text: 'Login',
 			}),
 		)

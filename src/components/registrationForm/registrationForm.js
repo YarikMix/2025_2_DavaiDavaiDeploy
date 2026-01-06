@@ -1,8 +1,9 @@
-import Button from '../../shared/button/button.js'
-import Input from '../../shared/input/input.js'
-import PasswordInput from '../../shared/passwordInput/passwordInput.js'
-import Component from '../core/baseComponent.js'
+import Button from '../../uikit/button/button.js'
+import Input from '../../uikit/input/input.js'
+import PasswordInput from '../../uikit/passwordInput/passwordInput.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
 import registrationFormUsecase from './registrationForm.usecase.js'
+import template from "./registrationForm.hbs"
 
 class RegistrationForm extends Component {
 	#parent
@@ -18,7 +19,6 @@ class RegistrationForm extends Component {
 			{
 				id: registrationFormUsecase.id,
 			},
-			'registrationForm',
 		)
 		this.#parent = parent
 		this.#loginInput = null
@@ -88,7 +88,7 @@ class RegistrationForm extends Component {
 	render() {
 		this.#parent.insertAdjacentHTML(
 			'beforeend',
-			this.html({
+			template({
 				action: registrationFormUsecase.action,
 				id: registrationFormUsecase.id,
 			}),

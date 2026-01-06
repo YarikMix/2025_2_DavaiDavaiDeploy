@@ -1,9 +1,10 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
-import { serverAddrForStatic } from '../../consts/serverAddr.js'
-import genreActions from '../../redux/features/genre/actions.js'
-import { selectGenreSection } from '../../redux/features/genre/selectors.js'
-import { store } from '../../redux/store.js'
-import Page from '../core/basePage.js'
+import { serverAddrForStatic } from '@/consts/serverAddr.js'
+import { selectGenreSection } from '@/redux/features/genre/selectors.js'
+import { store } from '@/redux/store.js'
+import Page from '../../modules/lib/basePage/basePage.js'
+import template from "./genrePage.hbs"
+import { fetchGenre } from '@/redux/features/genre/slice.js'
 
 /**
  * Класс страницы жанра.
@@ -15,7 +16,7 @@ export default class GenrePage extends Page {
 	 * @param {Object} location Объект локации
 	 */
 	constructor(rootElement, location) {
-		super(rootElement, location, 'genrePage')
+		super(rootElement, location)
 	}
 
 	/** @returns {HTMLElement} Контейнер с фильмами */
@@ -35,7 +36,7 @@ export default class GenrePage extends Page {
 		this.parent.innerHTML = ''
 		this.parent.insertAdjacentHTML(
 			'afterbegin',
-			this.template({
+			template({
 				title: this.props.title,
 				description: this.props.description,
 			}),
@@ -44,10 +45,7 @@ export default class GenrePage extends Page {
 
 		this.unsubscribe = store.subscribe(this.handleStoreUpdate)
 
-		store.dispatch(
-			genreActions.getGenreFilmsAction(this.props.location.params.id),
-		)
-		store.dispatch(genreActions.getGenreAction(this.props.location.params.id))
+		store.dispatch(fetchGenre(this.props.location.params.id))
 	}
 
 	/**

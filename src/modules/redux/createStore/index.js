@@ -9,7 +9,7 @@
  * }} Интерфейс хранилища состояния.
  */
 export const createStore = reducer => {
-	let state = reducer(undefined, { type: '__INIT__' })
+	let state = reducer(undefined, { type: "__INIT__" })
 	let subscribes = []
 
 	const getState = () => state

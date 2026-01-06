@@ -1,4 +1,5 @@
-import Component from '../core/baseComponent.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
+import template from "./layout.hbs"
 
 /**
  * Макет
@@ -11,7 +12,7 @@ class Layout extends Component {
 	 * @param {Element} parent - родительский элемент
 	 */
 	constructor(parent) {
-		super(parent, { id: 'layout' }, 'layout')
+		super(parent, { id: 'layout' })
 		this.#parent = parent
 	}
 
@@ -19,7 +20,7 @@ class Layout extends Component {
 	 * Рендеринг страницы
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.html())
+		this.#parent.insertAdjacentHTML('beforeend', template())
 	}
 }
 

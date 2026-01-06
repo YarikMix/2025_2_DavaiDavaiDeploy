@@ -1,6 +1,7 @@
-import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper.js'
-import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper.js'
-import Component from '../core/baseComponent.js'
+import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper.js'
+import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
+import template from "./filmCard.hbs"
 
 /**
  * Класс FilmCard представляет карточку фильма.
@@ -13,7 +14,7 @@ export default class FilmCard extends Component {
 	 * @param {Object} [props={}] - Свойства карточки фильма.
 	 */
 	constructor(parent, props = {}) {
-		super(parent, props, 'filmCard')
+		super(parent, props)
 	}
 
 	/**
@@ -39,7 +40,7 @@ export default class FilmCard extends Component {
 			ratingType: getRatingType(this.props.rating),
 		}
 
-		this.parent?.insertAdjacentHTML('beforeend', this.html(context))
+		this.parent?.insertAdjacentHTML('beforeend', template(context))
 	}
 
 	/**
@@ -58,6 +59,6 @@ export default class FilmCard extends Component {
 		if (!this.self) {
 			return
 		}
-		this.self.outerHTML = this.html(context)
+		this.self.outerHTML = template(context)
 	}
 }

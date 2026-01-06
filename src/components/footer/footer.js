@@ -1,4 +1,5 @@
-import Component from '../core/baseComponent.js'
+import Component from '../../modules/lib/baseComponent/baseComponent.js'
+import template from "./footer.hbs"
 
 /**
  * Шапка
@@ -12,7 +13,7 @@ class Footer extends Component {
 	 * @param {Function} params.navigate - функция навигации по страницам
 	 */
 	constructor(parent) {
-		super(parent, { id: 'footer' }, 'footer')
+		super(parent, { id: 'footer' })
 		this.#parent = parent
 	}
 
@@ -20,7 +21,7 @@ class Footer extends Component {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.html())
+		this.#parent.insertAdjacentHTML('beforeend', template())
 	}
 }
 

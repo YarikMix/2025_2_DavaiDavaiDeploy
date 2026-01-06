@@ -1,17 +1,19 @@
 import CardGrid from '../../components/cardGrid/cardGrid.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
-import { TOPFILM } from '../../mocks/films.js'
-import Page from '../core/basePage.js'
+import Page from '../../modules/lib/basePage/basePage.js'
+import template from "./homePage.hbs"
+
 /**
  * Класс для отображения главной страницы.
  */
 export default class Home extends Page {
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
+	 * @param {Object} location Объект локации
 	 */
 	constructor(rootElement, location) {
-		super(rootElement, location, 'homePage')
+		super(rootElement, location)
 	}
 
 	/**
@@ -35,25 +37,16 @@ export default class Home extends Page {
 	 */
 	render() {
 		this.parent.innerHTML = ''
-		this.parent.insertAdjacentHTML('afterbegin', this.template())
+		this.parent.insertAdjacentHTML('afterbegin', template())
+
+		this.topFilm = new TopFilm(this.main)
+		this.topFilm.render()
 
 		this.genreSlider = new GenreSlider(this.main)
 		this.genreSlider.render()
 
 		this.cardGrid = new CardGrid(this.films)
 		this.cardGrid.render()
-
-		const topFilm = new TopFilm(this.main, {
-			id: TOPFILM.id,
-			image: TOPFILM.image,
-			title: TOPFILM.title,
-			year: TOPFILM.year,
-			genre: TOPFILM.genre,
-			duration: TOPFILM.duration,
-			desription: TOPFILM.desription,
-			rating: 9.7,
-		})
-		topFilm.render()
 	}
 
 	/**
