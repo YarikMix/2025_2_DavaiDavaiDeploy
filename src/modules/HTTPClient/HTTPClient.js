@@ -151,9 +151,7 @@ export class HTTPClient {
 			})
 
 			if (!response.ok) {
-				throw new Error(
-					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
-				)
+				throw new Error(`HTTP error! status: ${response.status}`)
 			}
 
 			clearTimeout(timeout)

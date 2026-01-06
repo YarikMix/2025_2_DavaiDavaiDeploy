@@ -31,13 +31,13 @@ jobs:
           path: |
             node_modules
             ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
       - name: Install Dependencies
         if: steps.cache-ci.outputs.cache-hit != 'true'
-        run: npm ci
+        run: yarn install
 
   eslint-check:
     name: Eslint check
@@ -52,12 +52,12 @@ jobs:
           path: |
             node_modules
             ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Run ESLint
         run: |
-          npm run lint:eslint
+          yarn lint:eslint
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -85,7 +85,7 @@ jobs:
         run: |
           npm run lint:prettier
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -112,7 +112,7 @@ jobs:
       - name: Run Stylelint
         run: npm run lint:stylelint
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -139,7 +139,7 @@ jobs:
       - name: Run tests
         run: npm run test
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -178,7 +178,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/test
-            
+
             source .env.stage
 
             docker build -f Dockerfile.stage \
@@ -198,11 +198,11 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/test
-  
+
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
             docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
             docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
-      
+
       - name: Send failure notification
         if: failure()
         uses: PacificPromise/macos-telegram-action@main
