@@ -110,9 +110,6 @@ export const persistStore = (store, config = {}) => {
 			err: savedState ? null : new Error('No saved state found'),
 		});
 
-		// Устанавливаем флаг bootstrapped
-		isBootstrapped = true;
-
 		// Уведомляем всех слушателей
 		notifyListeners();
 	};
