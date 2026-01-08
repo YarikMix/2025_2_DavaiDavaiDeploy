@@ -1,4 +1,4 @@
-import { Provider } from './Provider';
+import { StoreProvider } from './StoreProvider';
 import { applyMiddleware } from './applyMiddleware';
 import { combineReducers } from './combineReducers';
 import { compose } from './compose';
@@ -11,6 +11,6 @@ export {
 	compose,
 	connect,
 	createStore,
-	Provider,
 	StoreContext,
+	StoreProvider,
 };

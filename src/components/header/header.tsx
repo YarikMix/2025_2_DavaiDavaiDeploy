@@ -55,17 +55,17 @@ class HeaderComponent extends Component<
 	};
 
 	renderUserSection() {
+		if (this.props.user) {
+			return (
+				<LoadedUser user={this.props.user} logoutUser={this.props.logoutUser} />
+			);
+		}
+
 		if (this.props.isLoading) {
 			return (
 				<div className={styles.loadingContainer}>
 					<LoadingState />
 				</div>
-			);
-		}
-
-		if (this.props.user) {
-			return (
-				<LoadedUser user={this.props.user} logoutUser={this.props.logoutUser} />
 			);
 		}
 

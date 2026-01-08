@@ -1,9 +1,10 @@
 import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import 'reset-css/reset.css';
 
-import { compose, connect, Provider } from '@/modules/redux';
+import { compose, connect, StoreProvider } from '@/modules/redux';
+import { PersistGate } from '@/modules/redux-persist/PersistGate/PersistGate.tsx';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
-import { store } from '@/redux/store.ts';
+import { persistor, store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
@@ -100,11 +101,13 @@ class ProvidersLayout extends Component {
 	render() {
 		return (
 			<ModalsProvider>
-				<Provider store={store}>
-					<AdaptivityProvider>
-						<RouterProvider>{this.props.children}</RouterProvider>
-					</AdaptivityProvider>
-				</Provider>
+				<StoreProvider store={store}>
+					<PersistGate loading={null} persistor={persistor}>
+						<AdaptivityProvider>
+							<RouterProvider>{this.props.children}</RouterProvider>
+						</AdaptivityProvider>
+					</PersistGate>
+				</StoreProvider>
 			</ModalsProvider>
 		);
 	}

@@ -2,11 +2,11 @@ import { Component } from 'ddd-react';
 import { StoreContext } from '../connect';
 import type { Store } from '../types/store';
 
-interface ProviderProps {
+interface StoreProviderProps {
 	store: Store;
 }
 
-export class Provider extends Component<ProviderProps> {
+export class StoreProvider extends Component<StoreProviderProps> {
 	render() {
 		return (
 			<StoreContext.Provider value={this.props.store}>
