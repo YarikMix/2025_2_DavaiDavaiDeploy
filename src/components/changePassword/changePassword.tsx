@@ -10,8 +10,8 @@ import {
 	selectPasswordChangeError,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
-import { Button, Flex, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Button, Flex, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { PasswordInputField } from '../passwordInputField/passwordInputField.tsx';
@@ -61,7 +61,7 @@ class ChangePasswordComponent extends Component<
 		}
 	};
 
-	onUpdate() {
+	didUpdate() {
 		if (this.props.error && !this.state.errorShown) {
 			AppToast.error('Неверный текущий пароль');
 			this.setState({ errorShown: true });

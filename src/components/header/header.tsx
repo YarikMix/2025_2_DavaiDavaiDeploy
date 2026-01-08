@@ -1,6 +1,9 @@
 import Loupe from '@/assets/img/loupe.svg?react';
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath.ts';
+import type { WithAdaptivityProps } from '@/modules/adaptivity/withAdaptivityProps.ts';
+import type { WithModalProps } from '@/modules/modals/withModalProps.ts';
 import { compose, connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -15,15 +18,14 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Flex, IconButton, Logo } from '@/uikit/index';
 import { Component } from 'ddd-react';
-import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
+import { Lottie } from 'ddd-react-lottie';
+import { Flex, IconButton, Logo } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
-import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { withModal } from '../../modules/modals/withModal.tsx';
-import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { SearchInput } from '../searchInput/searchInput.tsx';
+import animationData from './anim.json';
 import styles from './header.module.scss';
 
 interface HeaderProps {
@@ -95,6 +97,12 @@ class HeaderComponent extends Component<
 			);
 		}
 
+		const defaultOptions = {
+			loop: true,
+			autoplay: true,
+			animationData: animationData,
+		};
+
 		return (
 			<Flex
 				id="header"
@@ -102,6 +110,7 @@ class HeaderComponent extends Component<
 				justify="between"
 				align="center"
 			>
+				<Lottie options={defaultOptions} height={400} width={400} />
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>

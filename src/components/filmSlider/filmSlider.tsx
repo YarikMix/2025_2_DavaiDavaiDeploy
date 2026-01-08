@@ -8,8 +8,8 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from 'ddd-react';
+import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -100,7 +100,7 @@ class FilmSliderComponent extends Component<
 		return MIN_SLIDE_CAPACITY;
 	}
 
-	onMount() {
+	didMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 
 		const autoSlider = createPeriodFunction(

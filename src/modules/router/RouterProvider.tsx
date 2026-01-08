@@ -33,11 +33,11 @@ export class RouterProvider extends Component {
 		});
 	};
 
-	onMount() {
+	didMount() {
 		window.addEventListener('popstate', this.handlePopState);
 	}
 
-	onWillUnmount() {
+	willUnmount() {
 		window.removeEventListener('popstate', this.handlePopState);
 	}
 

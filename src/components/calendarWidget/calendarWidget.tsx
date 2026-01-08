@@ -9,8 +9,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectCalendarFilms } from '@/redux/features/calendar/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import { Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Subhead, Title } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { CalendarWidgetFilmCard } from '../calendarWidgetFilmCard/calendarWidgetFilmCard';
@@ -28,7 +28,7 @@ interface CalendarWidgetProps {
 class CalendarWidgetComponent extends Component<
 	CalendarWidgetProps & WithRouterProps & WithAdaptivityProps
 > {
-	onMount() {
+	didMount() {
 		this.props.getFilms(MAX_FILM_COUNT, OFFSET);
 	}
 

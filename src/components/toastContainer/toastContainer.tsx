@@ -1,8 +1,8 @@
 import { Toast } from '@/components/toast/toast';
 import type { ToastType } from '@/consts/toasts';
 
-import { Flex } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { compose } from '../../modules/redux';

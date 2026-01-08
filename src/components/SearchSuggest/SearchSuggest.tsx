@@ -39,12 +39,12 @@ export class SearchSuggest extends Component<
 		}
 	};
 
-	onMount() {
+	didMount() {
 		document.addEventListener('mousedown', this.handleClickOutside);
 		document.addEventListener('touchstart', this.handleClickOutside);
 	}
 
-	onWillUnmount() {
+	willUnmount() {
 		document.removeEventListener('mousedown', this.handleClickOutside);
 		document.removeEventListener('touchstart', this.handleClickOutside);
 	}

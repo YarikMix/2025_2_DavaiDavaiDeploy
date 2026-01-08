@@ -4,8 +4,8 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/actor/actions';
 import type { Map } from '@/types/map';
-import { Flex } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex } from 'ddd-ui-kit';
 import styles from './actorPage.module.scss';
 
 interface ActorPageProps {

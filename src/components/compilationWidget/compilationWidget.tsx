@@ -7,8 +7,8 @@ import actions from '@/redux/features/compilations/actions';
 import { selectCompilations } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
-import { Flex, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Title } from 'ddd-ui-kit';
 import { CompilationWidgetCard } from '../compilationWidgetCard/compilationWidgetCard';
 import styles from './compilationWidget.module.scss';
 
@@ -20,7 +20,7 @@ interface CompilationWidgetProps {
 class CompilationWidgetComponent extends Component<
 	CompilationWidgetProps & WithRouterProps
 > {
-	onMount() {
+	didMount() {
 		this.props.getCompilations();
 	}
 

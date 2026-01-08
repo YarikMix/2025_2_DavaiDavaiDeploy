@@ -7,8 +7,8 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Flex, Image, Paragraph, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Image, Paragraph, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import styles from './genreInfo.module.scss';
@@ -22,7 +22,7 @@ interface GenreInfoProps {
 class GenreInfoComponent extends Component<
 	GenreInfoProps & WithRouterProps & WithModalProps
 > {
-	onMount() {
+	didMount() {
 		this.props.getGenre(this.props.router.params.id);
 	}
 

@@ -5,6 +5,7 @@ import {
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
+import { Component } from 'ddd-react';
 import {
 	Avatar,
 	Flex,
@@ -13,8 +14,7 @@ import {
 	Rating,
 	Separator,
 	Subhead,
-} from '@/uikit/index';
-import { Component } from 'ddd-react';
+} from 'ddd-ui-kit';
 import styles from './feedBack.module.scss';
 
 interface FeedBackProps {

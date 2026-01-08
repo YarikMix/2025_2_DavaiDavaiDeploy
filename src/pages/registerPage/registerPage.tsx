@@ -19,8 +19,8 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Button, Flex, FormItem, Headline, Title } from 'ddd-ui-kit';
 import { SMALL_TABLET_MIN_WIDTH } from '../../consts/adaptivity';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
@@ -50,7 +50,7 @@ export class RegisterPageNotConnected extends Component<
 		errorShown: false,
 	};
 
-	onMount() {
+	didMount() {
 		store.dispatch(actions.resetUserError());
 	}
 
@@ -85,7 +85,7 @@ export class RegisterPageNotConnected extends Component<
 		}
 	};
 
-	onUpdate() {
+	didUpdate() {
 		if (this.props.user) {
 			store.dispatch(actions.resetUserError());
 		}

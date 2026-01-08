@@ -1,3 +1,4 @@
+import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import 'reset-css/reset.css';
 
 import { compose, connect, Provider } from '@/modules/redux';
@@ -64,7 +65,7 @@ interface AppProps {
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
-	onMount() {
+	didMount() {
 		this.props.checkUser();
 	}
 

@@ -12,8 +12,8 @@ import { selectFavorites } from '@/redux/features/favorites/selectors';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Flex, Headline, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Headline, Title } from 'ddd-ui-kit';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
@@ -23,7 +23,7 @@ interface UserPageProps {
 }
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
-	onMount() {
+	didMount() {
 		this.props.getFavorites();
 	}
 

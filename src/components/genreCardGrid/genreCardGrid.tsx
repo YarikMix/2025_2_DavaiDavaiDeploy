@@ -10,8 +10,8 @@ import {
 } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { CardGrid, Flex } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { CardGrid, Flex } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './genreCardGrid.module.scss';
 
@@ -26,7 +26,7 @@ interface GenreCardGridProps {
 class GenreCardGridComponent extends Component<
 	GenreCardGridProps & WithRouterProps
 > {
-	onMount() {
+	didMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 	}
 

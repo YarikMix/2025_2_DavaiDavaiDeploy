@@ -108,6 +108,8 @@ export default defineConfig([
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-unsafe-function-type': 'off',
 			'sonarjs/cognitive-complexity': ['error', 20],
+			'@typescript-eslint/no-wrapper-object-types': 'off',
+			'sonarjs/no-duplicated-branches': 'off'
 		},
 		ignores: Ignores,
 	},

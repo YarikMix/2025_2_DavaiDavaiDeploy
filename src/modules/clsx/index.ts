@@ -24,7 +24,7 @@ type ClassValue = string | { [key: string]: boolean } | undefined;
  *
  * @example
  * Комбинированное использование
- * import clsx from '@/modules/clsx';
+ * import clsx from 'ddd-clsx';
  *
  * const outlined = false;
  * const elevated = true;

@@ -1,4 +1,3 @@
-import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,6 +12,8 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import {
 	Avatar,
 	Button,
@@ -21,8 +22,7 @@ import {
 	Subhead,
 	Switch,
 	Title,
-} from '@/uikit/index';
-import { Component } from 'ddd-react';
+} from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
@@ -120,7 +120,7 @@ class ChangeAvatarComponent extends Component<
 		this.props.setAvatar(file);
 	};
 
-	onUpdate() {
+	didUpdate() {
 		if (this.props.error && !this.props.loading && !this.state.errorShown) {
 			AppToast.error(this.props.error);
 			this.setState({ errorShown: true });
@@ -160,7 +160,7 @@ class ChangeAvatarComponent extends Component<
 		}
 	};
 
-	onMount(): void | Promise<void> {
+	didMount(): void | Promise<void> {
 		this.setState({ OTPActivated: this.props.OTPActivated });
 	}
 

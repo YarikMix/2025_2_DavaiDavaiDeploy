@@ -2,7 +2,6 @@ import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -13,6 +12,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompFilm } from '@/types/models';
+import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import {
 	Badge,
 	Button,
@@ -22,8 +23,7 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from 'ddd-react';
+} from 'ddd-ui-kit';
 import styles from './compilationPageFilmCard.module.scss';
 
 interface CompilationPageFilmCardProps {

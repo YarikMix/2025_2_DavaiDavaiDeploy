@@ -7,7 +7,7 @@ interface RedirectProps {
 }
 
 class RedirectComponent extends Component<WithRouterProps & RedirectProps> {
-	onMount() {
+	didMount() {
 		this.props.router.navigate(this.props.to);
 	}
 

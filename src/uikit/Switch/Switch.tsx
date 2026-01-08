@@ -1,4 +1,4 @@
-import clsx from '@/modules/clsx';
+import clsx from 'ddd-clsx';
 import { Component } from 'ddd-react';
 import { Flex } from '../Flex/Flex';
 import styles from './Switch.module.scss';

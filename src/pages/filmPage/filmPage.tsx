@@ -16,8 +16,8 @@ import {
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
-import { Flex, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Title } from 'ddd-ui-kit';
 import styles from './filmPage.module.scss';
 
 interface FilmPageProps {
@@ -50,7 +50,7 @@ class FilmPageComponent extends Component<
 		observer: undefined,
 	};
 
-	onMount() {
+	didMount() {
 		const filmId = this.props.router.params.id;
 
 		this.props.getFilm(filmId);

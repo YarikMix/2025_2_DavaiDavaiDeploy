@@ -10,8 +10,8 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
-import { Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './actorInfo.module.scss';
@@ -23,7 +23,7 @@ interface ActorInfoProps {
 }
 
 class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
-	onMount() {
+	didMount() {
 		this.props.getActor(this.props.router.params.id);
 	}
 

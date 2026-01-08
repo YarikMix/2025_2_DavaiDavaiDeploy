@@ -1,7 +1,7 @@
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageActor } from '@/types/models';
-import { Flex, Image, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Flex, Image, Title } from 'ddd-ui-kit';
 import styles from './actorCard.module.scss';
 
 interface ActorCardProps {

@@ -7,8 +7,8 @@ import actions from '@/redux/features/films/actions';
 import { selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { CardGrid, Flex, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { CardGrid, Flex, Title } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
@@ -23,7 +23,7 @@ interface FilmCardGridProps {
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
 > {
-	onMount() {
+	didMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET);
 	}
 

@@ -11,8 +11,8 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
-import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from 'ddd-react';
+import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import styles from './userFeedback.module.scss';
 
@@ -40,7 +40,7 @@ class FeedbackFormComponent extends Component<
 
 	userFeedbackRef = createRef<HTMLDivElement>();
 
-	onMount() {
+	didMount() {
 		const throttledScrollHandler = throttle(this.handleScroll, THROTTLE_DELAY);
 		window.addEventListener('scroll', throttledScrollHandler);
 	}

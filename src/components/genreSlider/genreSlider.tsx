@@ -1,7 +1,6 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
 import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
-import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -9,8 +8,9 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Flex, IconButton, Title } from '@/uikit/index';
+import clsx from 'ddd-clsx';
 import { Component } from 'ddd-react';
+import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
@@ -63,7 +63,7 @@ class GenreSliderComponent extends Component<
 		return this.props.adaptivity.isWideDesktop ? 8 : 4;
 	}
 
-	onMount() {
+	didMount() {
 		this.props.getGenres();
 
 		if (this.state.autoSlider && this.state.autoSlider.isWorking()) {

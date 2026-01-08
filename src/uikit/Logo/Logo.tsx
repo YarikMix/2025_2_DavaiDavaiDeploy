@@ -1,5 +1,5 @@
 import LogoSVG from '@/assets/img/logo.svg?react';
-import clsx from '@/modules/clsx';
+import clsx from 'ddd-clsx';
 import { Component } from 'ddd-react';
 import styles from './Logo.module.scss';
 

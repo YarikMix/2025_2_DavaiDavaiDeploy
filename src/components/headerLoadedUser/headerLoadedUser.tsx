@@ -1,7 +1,7 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar, Flex } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { Avatar, Flex } from 'ddd-ui-kit';
 import styles from './headerLoadedUser.module.scss';
 
 interface LoadedUserProps {

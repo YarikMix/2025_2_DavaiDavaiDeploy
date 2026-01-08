@@ -80,7 +80,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		SmallMobileScreen.removeEventListener('change', this.smallMobileHandler);
 	};
 
-	onMount() {
+	didMount() {
 		this.subscribeToMediaQueries();
 	}
 

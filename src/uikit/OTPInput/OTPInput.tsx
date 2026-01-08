@@ -17,7 +17,7 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 		values: [],
 	};
 
-	onMount() {
+	didMount() {
 		const firstInput = document.querySelector(
 			`[data-index="0"]`,
 		) as HTMLInputElement | null;

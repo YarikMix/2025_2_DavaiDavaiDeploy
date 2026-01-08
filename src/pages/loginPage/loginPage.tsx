@@ -19,6 +19,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component } from 'ddd-react';
 import {
 	Button,
 	Flex,
@@ -27,8 +28,7 @@ import {
 	Logo,
 	OTPInput,
 	Title,
-} from '@/uikit/index';
-import { Component } from 'ddd-react';
+} from 'ddd-ui-kit';
 import { ERROR_CODES } from '../../consts/errorCodes';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
@@ -77,7 +77,7 @@ export class LoginPageNotConnected extends Component<
 		return usernameValidation.isValid && passwordValidation.isValid;
 	}
 
-	onMount() {
+	didMount() {
 		store.dispatch(actions.resetUserError());
 	}
 
@@ -89,7 +89,7 @@ export class LoginPageNotConnected extends Component<
 		}
 	};
 
-	onUpdate() {
+	didUpdate() {
 		if (this.props.user) {
 			store.dispatch(actions.resetUserError());
 		}

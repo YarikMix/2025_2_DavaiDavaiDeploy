@@ -22,7 +22,7 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 
 			private unsubscribe?: () => void;
 
-			onMount() {
+			didMount() {
 				const store = this.context;
 
 				if (store) {
@@ -32,7 +32,7 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 				}
 			}
 
-			onWillUnmount() {
+			willUnmount() {
 				if (this.unsubscribe) {
 					this.unsubscribe();
 				}

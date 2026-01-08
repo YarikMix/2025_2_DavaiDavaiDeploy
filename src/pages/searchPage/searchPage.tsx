@@ -16,8 +16,8 @@ import type {
 	ModelsVoiceSearchResponse,
 } from '@/types/models';
 
-import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
 import { Component } from 'ddd-react';
+import { CardGrid, Flex, Paragraph, Title } from 'ddd-ui-kit';
 import styles from './searchPage.module.scss';
 
 interface SearchPageProps {
@@ -28,7 +28,7 @@ interface SearchPageProps {
 }
 
 class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
-	onMount() {
+	didMount() {
 		if (this.props.router.params['query']) {
 			this.props.getSearchResult(this.props.router.params['query']);
 		}
