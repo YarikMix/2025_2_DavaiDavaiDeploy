@@ -13,7 +13,7 @@ export class Image extends Component<ImageProps> {
 		const { src, alt, className, getRootRef } = this.props;
 
 		if (!src) {
-			return <div />;
+			return null;
 		}
 
 		const url = getImageURL(src);

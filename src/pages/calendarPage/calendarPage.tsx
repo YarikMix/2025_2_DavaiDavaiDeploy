@@ -26,7 +26,7 @@ class CalendarPageComponent extends Component<CalendarPageProps> {
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
-			return <div />;
+			return null;
 		}
 
 		return (

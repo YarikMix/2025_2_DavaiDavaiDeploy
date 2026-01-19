@@ -166,7 +166,7 @@ class ChangeAvatarComponent extends Component<
 
 	render() {
 		if (!this.props.user) {
-			return <div />;
+			return null;
 		}
 
 		const { avatar } = this.props.user;

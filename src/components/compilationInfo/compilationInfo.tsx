@@ -10,7 +10,7 @@ interface CompilationInfoProps {
 export class CompilationInfo extends Component<CompilationInfoProps> {
 	render() {
 		if (!this.props.compilation) {
-			return <div />;
+			return null;
 		}
 
 		const { title, description } = this.props.compilation;

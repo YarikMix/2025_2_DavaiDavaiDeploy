@@ -179,7 +179,7 @@ class GenreSliderComponent extends Component<
 		const { genres } = this.props;
 
 		if (!genres || !genres.length) {
-			return <div />;
+			return null;
 		}
 
 		const visibleGenres = this.getVisibleGenres();

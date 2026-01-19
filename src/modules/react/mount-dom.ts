@@ -24,10 +24,10 @@ export function mountDOM(
 		return;
 	}
 
-	if (Array.isArray(vdom)) {
-		vdom.map((v) => mountDOM(v, parentEl, index, hostComponent));
-		return;
-	}
+	// if (Array.isArray(vdom)) {
+	// 	vdom.map((v) => mountDOM(v, parentEl, index, hostComponent));
+	// 	return;
+	// }
 
 	switch (vdom.type) {
 		case DOM_TYPES.TEXT: {

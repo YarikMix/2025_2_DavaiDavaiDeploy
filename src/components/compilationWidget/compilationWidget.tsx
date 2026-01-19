@@ -26,7 +26,7 @@ class CompilationWidgetComponent extends Component<
 
 	render() {
 		if (!this.props.compilations || this.props.compilations.length === 0) {
-			return <div />;
+			return null;
 		}
 
 		return (

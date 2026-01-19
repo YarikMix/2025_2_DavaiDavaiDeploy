@@ -1,6 +1,6 @@
 import { isEqual } from '@guanghechen/fast-deep-equal';
 import { destroyDOM } from './destroy-dom';
-import { extractChildren } from './h';
+import { extractChildren, h, hFragment } from './h';
 import { mountDOM } from './mount-dom';
 import { patchDOM } from './patch-dom';
 import { enqueueJob } from './scheduler';
@@ -179,9 +179,22 @@ export abstract class Component<P = {}, S = {}, C = null> {
 		this.updateContext();
 
 		try {
-			const vdom = this.render() as VDOMNode;
+			const renderResult = this.render() as VDOMNode;
 			this.hostEl = hostEl;
 			this.isMounted = true;
+
+			let vdom: VDOMNode | null = null;
+
+			if (renderResult == null) {
+				vdom = null;
+			} else if (Array.isArray(renderResult)) {
+				vdom = renderResult.length > 0 ? hFragment(renderResult) : null;
+			} else if (typeof renderResult === 'function') {
+				vdom = h(renderResult as any, {});
+			} else {
+				// Если VDOMNode
+				vdom = renderResult;
+			}
 
 			if (vdom !== null) {
 				mountDOM(vdom, hostEl, index, this as Component);
@@ -227,23 +240,33 @@ export abstract class Component<P = {}, S = {}, C = null> {
 		enqueueJob(() => this.willUpdate(this.props, this.state));
 
 		try {
-			const vdom = this.render() as VDOMNode;
+			const renderResult = this.render() as VDOMNode;
 
-			// Случай 1: был null, стал VDOMNode
+			// Нормализуем результат render() так же как в mount()
+			let vdom: VDOMNode | null = null;
+
+			if (renderResult == null) {
+				vdom = null;
+			} else if (Array.isArray(renderResult)) {
+				// Если массив - оборачиваем в Fragment
+				vdom = renderResult.length > 0 ? hFragment(renderResult) : null;
+			} else if (typeof renderResult === 'function') {
+				// Если функция-компонент
+				vdom = h(renderResult as any, {});
+			} else {
+				// Если VDOMNode
+				vdom = renderResult;
+			}
+
 			if (this.vdom === null && vdom !== null) {
 				mountDOM(vdom, this.hostEl, null, this as Component);
 				this.vdom = vdom;
-			}
-			// Случай 2: был VDOMNode, стал null
-			else if (this.vdom !== null && vdom === null) {
+			} else if (this.vdom !== null && vdom === null) {
 				destroyDOM(this.vdom);
 				this.vdom = null;
-			}
-			// Случай 3: оба не null - обычный patch
-			else if (this.vdom !== null && vdom !== null) {
+			} else if (this.vdom !== null && vdom !== null) {
 				this.vdom = patchDOM(this.vdom, vdom, this.hostEl, this as Component);
 			}
-			// Случай 4: оба null - ничего не делаем
 
 			enqueueJob(() => this.didUpdate(prevProps, prevState));
 		} catch (error) {

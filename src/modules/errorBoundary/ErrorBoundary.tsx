@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<{}, State> {
 
 	render() {
 		if (this.state.hasError) {
-			return <div />;
+			return null;
 		}
 
 		return this.props.children;

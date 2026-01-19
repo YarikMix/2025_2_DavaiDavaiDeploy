@@ -7,4 +7,3 @@ dist/
 .env.production
 .env.local
 /dev-dist
-src/modules/react

@@ -121,14 +121,14 @@ class Test extends Component<{}, { test: boolean }> {
 	};
 
 	didMount() {
-		setTimeout(() => {
-			this.setState({ test: true });
+		setInterval(() => {
+			this.setState({ test: !this.state.test });
 		}, 1000);
 	}
 
 	render() {
 		if (this.state.test) {
-			return <div>sadf123</div>;
+			return this.props.children;
 		}
 
 		return null;
@@ -139,7 +139,11 @@ class App1 extends Component {
 	render() {
 		return (
 			<div>
-				<Test />
+				<Test>
+					<span>333</span>
+					<br />
+					<span>444</span>
+				</Test>
 				<h3>asdf</h3>
 			</div>
 		);

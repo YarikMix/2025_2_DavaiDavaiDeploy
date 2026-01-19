@@ -70,7 +70,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 
 	renderResult = () => {
 		if (!this.props.searchResult) {
-			return <div />;
+			return null;
 		}
 
 		const { actors, films } = this.props.searchResult;

@@ -45,7 +45,7 @@ class CompilationPageComponent extends Component<
 			!this.props.compilation &&
 			(!this.props.films || this.props.films.length === 0)
 		) {
-			return <div />;
+			return null;
 		}
 
 		const { compilation, films } = this.props;

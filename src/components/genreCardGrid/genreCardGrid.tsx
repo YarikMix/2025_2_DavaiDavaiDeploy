@@ -32,7 +32,7 @@ class GenreCardGridComponent extends Component<
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
-			return <div />;
+			return null;
 		}
 
 		return (

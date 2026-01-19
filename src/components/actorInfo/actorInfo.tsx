@@ -37,7 +37,7 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 		}
 
 		if (!this.props.actor) {
-			return <div />;
+			return null;
 		}
 
 		const {
