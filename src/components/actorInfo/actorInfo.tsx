@@ -1,5 +1,6 @@
 import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfoHelper';
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -10,7 +11,6 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
-import { Component } from 'ddd-react';
 import { Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';

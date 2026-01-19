@@ -5,7 +5,7 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
 import clsx from 'ddd-clsx';
-import { Component, createRef } from 'ddd-react';
+import { Component, createRef } from '@/modules/react';
 import { Flex, IconButton } from 'ddd-ui-kit';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';

@@ -4,7 +4,7 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/genre/actions';
 import type { Map } from '@/types/map';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex } from 'ddd-ui-kit';
 import styles from './genrePage.module.scss';
 

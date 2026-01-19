@@ -19,7 +19,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import {
 	Button,
 	Flex,

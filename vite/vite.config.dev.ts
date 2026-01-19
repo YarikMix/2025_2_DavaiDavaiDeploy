@@ -1,6 +1,5 @@
 import { defineConfig, mergeConfig } from 'vite';
 import { baseViteConfig } from './vite.config.base';
-import { sentryViteConfig } from './viteSentry.config';
 
 const devViteConfig = {
 	build: {
@@ -16,7 +15,6 @@ const devViteConfig = {
 
 export default defineConfig((env) =>
 	mergeConfig(
-		mergeConfig(devViteConfig, baseViteConfig(env)),
-		sentryViteConfig(env),
+		devViteConfig, baseViteConfig(env),
 	),
 );

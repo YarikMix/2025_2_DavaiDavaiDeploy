@@ -1,5 +1,5 @@
 import clsx from 'ddd-clsx';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import styles from './Tooltip.module.scss';
 
 interface TooltipProps {

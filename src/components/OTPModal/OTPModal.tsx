@@ -1,4 +1,4 @@
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Button, Flex, Subhead, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';

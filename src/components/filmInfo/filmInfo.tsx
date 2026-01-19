@@ -14,7 +14,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
 import clsx from 'ddd-clsx';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import {
 	Badge,
 	Button,

@@ -1,7 +1,7 @@
 import { Toast } from '@/components/toast/toast';
 import type { ToastType } from '@/consts/toasts';
 
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';

@@ -1,6 +1,6 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import clsx from 'ddd-clsx';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import styles from './Avatar.module.scss';
 
 interface AvatarProps {

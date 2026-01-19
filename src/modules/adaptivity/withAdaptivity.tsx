@@ -1,5 +1,5 @@
-import type { ComponentType } from 'ddd-react';
-import { Component } from 'ddd-react';
+import type { ComponentType } from '@/modules/react';
+import { Component } from '@/modules/react';
 import type { AdaptivityContextValue } from './AdaptivityContext.ts';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import type { WithAdaptivityProps } from './withAdaptivityProps.ts';
@@ -16,8 +16,6 @@ export function withAdaptivity<P>(
 			return (
 				<AdaptivityContext.Consumer>
 					{(context: AdaptivityContextValue) => {
-						// eslint-disable-next-line no-console
-						console.log('В WITH ADAPTIVITY CONTEXT ', context);
 						return (
 							<WrappedComponent {...(this.props as any)} adaptivity={context} />
 						);

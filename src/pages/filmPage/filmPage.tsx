@@ -16,7 +16,7 @@ import {
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex, Title } from 'ddd-ui-kit';
 import styles from './filmPage.module.scss';
 

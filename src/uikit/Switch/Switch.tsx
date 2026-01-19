@@ -1,5 +1,5 @@
 import clsx from 'ddd-clsx';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex } from '../Flex/Flex';
 import styles from './Switch.module.scss';
 

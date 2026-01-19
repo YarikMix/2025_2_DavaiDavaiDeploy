@@ -5,7 +5,7 @@ import {
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import {
 	Avatar,
 	Flex,

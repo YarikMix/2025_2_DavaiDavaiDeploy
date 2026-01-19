@@ -1,5 +1,5 @@
 import clsx from 'ddd-clsx';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex } from '../Flex/Flex';
 import { Headline } from '../Headline/Headline';
 import { Subhead } from '../Subhead/Subhead';

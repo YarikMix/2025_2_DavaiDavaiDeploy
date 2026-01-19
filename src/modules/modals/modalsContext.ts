@@ -1,4 +1,4 @@
-import { createContext } from 'ddd-react';
+import { createContext } from '@/modules/react';
 
 export interface ModalContextValue {
 	activeModal: number | null;

@@ -1,4 +1,4 @@
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex } from '../Flex/Flex';
 import styles from './CardGrid.module.scss';
 

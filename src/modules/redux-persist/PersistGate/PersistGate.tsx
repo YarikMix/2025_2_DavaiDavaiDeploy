@@ -1,4 +1,4 @@
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 
 export interface PersistGateProps {
 	persistor: any;

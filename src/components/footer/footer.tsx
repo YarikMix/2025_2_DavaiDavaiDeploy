@@ -1,4 +1,4 @@
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Flex, Paragraph } from 'ddd-ui-kit';
 import { compose, connect } from '../../modules/redux';
 import type { State } from '../../modules/redux/types/store';

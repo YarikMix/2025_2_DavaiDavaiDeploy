@@ -1,6 +1,8 @@
 import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import 'reset-css/reset.css';
 
+import { ErrorBoundary } from '@/modules/errorBoundary/ErrorBoundary.tsx';
+import { Component, render } from '@/modules/react';
 import { compose, connect, StoreProvider } from '@/modules/redux';
 import { PersistGate } from '@/modules/redux-persist/PersistGate/PersistGate.tsx';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
@@ -8,16 +10,12 @@ import { persistor, store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
-import * as Sentry from '@sentry/browser';
-import { Component, render } from 'ddd-react';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
 import {
 	AppToast,
 	ToastContainer,
 } from './components/toastContainer/toastContainer.tsx';
-import { sentryDSN, sentryEnabled } from './consts/sentry';
-import { PRODUCTION_URL } from './consts/urls.ts';
 import { AdaptivityProvider } from './modules/adaptivity/AdaptivityProvider';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
@@ -40,17 +38,6 @@ import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
-
-if (sentryEnabled) {
-	Sentry.init({
-		dsn: sentryDSN,
-		enabled: true,
-		integrations: [Sentry.browserTracingIntegration()],
-		tracePropagationTargets: [PRODUCTION_URL],
-		release: import.meta.env.VITE_RELEASE_VERSION,
-		environment: import.meta.env.MODE,
-	});
-}
 
 window.addEventListener('online', () => {
 	AppToast.info('Соединение восстановлено12345678!');
@@ -100,15 +87,17 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<ModalsProvider>
-				<StoreProvider store={store}>
-					<PersistGate loading={null} persistor={persistor}>
-						<AdaptivityProvider>
-							<RouterProvider>{this.props.children}</RouterProvider>
-						</AdaptivityProvider>
-					</PersistGate>
-				</StoreProvider>
-			</ModalsProvider>
+			<ErrorBoundary>
+				<ModalsProvider>
+					<StoreProvider store={store}>
+						<PersistGate loading={null} persistor={persistor}>
+							<AdaptivityProvider>
+								<RouterProvider>{this.props.children}</RouterProvider>
+							</AdaptivityProvider>
+						</PersistGate>
+					</StoreProvider>
+				</ModalsProvider>
+			</ErrorBoundary>
 		);
 	}
 }
@@ -126,9 +115,35 @@ const App = compose(
 	connect(mapStateToProps, mapDispatchToProps),
 )(AppComponent);
 
-render(
-	<ProvidersLayout>
-		<App />
-	</ProvidersLayout>,
-	document.body,
-);
+class Test extends Component<{}, { test: boolean }> {
+	state = {
+		test: false,
+	};
+
+	didMount() {
+		setTimeout(() => {
+			this.setState({ test: true });
+		}, 1000);
+	}
+
+	render() {
+		if (this.state.test) {
+			return <div>sadf123</div>;
+		}
+
+		return null;
+	}
+}
+
+class App1 extends Component {
+	render() {
+		return (
+			<div>
+				<Test />
+				<h3>asdf</h3>
+			</div>
+		);
+	}
+}
+
+render(<App1 />, document.body);

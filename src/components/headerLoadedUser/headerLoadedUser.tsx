@@ -1,6 +1,6 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from 'ddd-react';
+import { Component } from '@/modules/react';
 import { Avatar, Flex } from 'ddd-ui-kit';
 import styles from './headerLoadedUser.module.scss';
 
