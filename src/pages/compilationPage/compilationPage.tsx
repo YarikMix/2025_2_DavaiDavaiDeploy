@@ -1,6 +1,5 @@
 import { CompilationInfo } from '@/components/compilationInfo/compilationInfo';
 import { CompilationPageFilmCard } from '@/components/compilationPageFilmCard/compilationPageFilmCard';
-import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,6 +12,7 @@ import {
 } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
+import { Component } from 'ddd-react';
 import { Flex } from 'ddd-ui-kit';
 import styles from './compilationPage.module.scss';
 

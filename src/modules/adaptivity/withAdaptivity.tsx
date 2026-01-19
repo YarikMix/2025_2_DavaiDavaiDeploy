@@ -1,5 +1,5 @@
-import type { ComponentType } from '@/modules/react';
-import { Component } from '@/modules/react';
+import type { ComponentType } from 'ddd-react';
+import { Component } from 'ddd-react';
 import type { AdaptivityContextValue } from './AdaptivityContext.ts';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import type { WithAdaptivityProps } from './withAdaptivityProps.ts';

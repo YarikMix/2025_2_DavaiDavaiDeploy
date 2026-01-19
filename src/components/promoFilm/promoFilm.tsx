@@ -9,7 +9,7 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import {
 	Badge,
 	Flex,

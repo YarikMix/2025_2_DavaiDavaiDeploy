@@ -1,4 +1,3 @@
-import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -8,6 +7,7 @@ import actions from '@/redux/features/compilations/actions';
 import { selectCompilations } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
+import { Component } from 'ddd-react';
 import { Flex, Title } from 'ddd-ui-kit';
 import { CompilationWidgetCard } from '../compilationWidgetCard/compilationWidgetCard';
 import styles from './compilationWidget.module.scss';

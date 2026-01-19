@@ -1,4 +1,3 @@
-import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -14,6 +13,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import clsx from 'ddd-clsx';
+import { Component } from 'ddd-react';
 import {
 	Avatar,
 	Button,

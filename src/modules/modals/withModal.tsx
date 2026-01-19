@@ -1,5 +1,5 @@
-import type { ComponentType } from '@/modules/react';
-import { Component } from '@/modules/react';
+import type { ComponentType } from 'ddd-react';
+import { Component } from 'ddd-react';
 import type { ModalContextValue } from './modalsContext.ts';
 import { ModalContext } from './modalsContext.ts';
 import type { WithModalProps } from './withModalProps.ts';

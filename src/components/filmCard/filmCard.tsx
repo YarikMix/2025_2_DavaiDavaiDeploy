@@ -2,7 +2,7 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import { Badge, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './filmCard.module.scss';
 

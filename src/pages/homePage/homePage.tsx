@@ -3,7 +3,7 @@ import { CompilationWidget } from '@/components/compilationWidget/compilationWid
 import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import { Flex } from 'ddd-ui-kit';
 import styles from './homePage.module.scss';
 

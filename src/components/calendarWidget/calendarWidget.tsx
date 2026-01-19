@@ -1,5 +1,4 @@
 import Arrow from '@/assets/img/arrowRight.svg?react';
-import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -10,6 +9,7 @@ import actions from '@/redux/features/calendar/actions';
 import { selectCalendarFilms } from '@/redux/features/calendar/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
+import { Component } from 'ddd-react';
 import { Flex, Subhead, Title } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';

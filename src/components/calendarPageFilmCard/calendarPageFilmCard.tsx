@@ -11,7 +11,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import clsx from 'ddd-clsx';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import {
 	Button,
 	Flex,

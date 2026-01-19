@@ -1,7 +1,6 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
 import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
-import { Component, createRef } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -9,6 +8,7 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Component, createRef } from 'ddd-react';
 import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';

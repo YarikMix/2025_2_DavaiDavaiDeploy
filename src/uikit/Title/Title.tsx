@@ -1,5 +1,5 @@
 import clsx from 'ddd-clsx';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import styles from './Title.module.scss';
 
 interface TitleProps {

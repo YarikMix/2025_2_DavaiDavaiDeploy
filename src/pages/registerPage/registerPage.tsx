@@ -19,7 +19,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import { Button, Flex, FormItem, Headline, Title } from 'ddd-ui-kit';
 import { SMALL_TABLET_MIN_WIDTH } from '../../consts/adaptivity';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';

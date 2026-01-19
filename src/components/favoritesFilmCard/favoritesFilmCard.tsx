@@ -9,7 +9,7 @@ import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/favorites/actions';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import {
 	Badge,
 	Flex,

@@ -8,7 +8,7 @@ import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
 import clsx from 'ddd-clsx';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import { Flex, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';

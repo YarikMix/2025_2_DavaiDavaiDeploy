@@ -18,7 +18,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import { Lottie } from 'ddd-react-lottie';
 import { Flex, IconButton, Logo } from 'ddd-ui-kit';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';

@@ -1,4 +1,4 @@
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 
 type State = {
 	error?: Error;

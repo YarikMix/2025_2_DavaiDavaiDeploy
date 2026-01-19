@@ -1,6 +1,6 @@
 name: Stage flow
 
-on: push
+on:
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -57,7 +57,7 @@ jobs:
         run: |
           npm run lint:eslint
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -85,7 +85,7 @@ jobs:
         run: |
           npm run lint:prettier
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -112,7 +112,7 @@ jobs:
       - name: Run Stylelint
         run: npm run lint:stylelint
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -139,7 +139,7 @@ jobs:
       - name: Run tests
         run: npm run test
       - name: Send Telegram Failure Message
-        if: failure() 
+        if: failure()
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -202,7 +202,7 @@ jobs:
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
             docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
             docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
-      
+
       - name: Send failure notification
         if: failure()
         uses: PacificPromise/macos-telegram-action@main

@@ -1,4 +1,4 @@
-import { Component, createRef } from '@/modules/react';
+import { Component, createRef } from 'ddd-react';
 import { Button } from '../Button/Button';
 import styles from './FileButton.module.scss';
 

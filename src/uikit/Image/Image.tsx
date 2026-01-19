@@ -1,5 +1,5 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 
 interface ImageProps {
 	src?: string;

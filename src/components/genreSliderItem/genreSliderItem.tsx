@@ -1,6 +1,6 @@
 import { Link } from '@/modules/router/link';
 import type { ModelsGenre } from '@/types/models';
-import { Component } from '@/modules/react';
+import { Component } from 'ddd-react';
 import { Image } from 'ddd-ui-kit';
 import styles from './genreSliderItem.module.scss';
 

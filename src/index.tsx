@@ -2,7 +2,6 @@ import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import 'reset-css/reset.css';
 
 import { ErrorBoundary } from '@/modules/errorBoundary/ErrorBoundary.tsx';
-import { Component, render } from '@/modules/react';
 import { compose, connect, StoreProvider } from '@/modules/redux';
 import { PersistGate } from '@/modules/redux-persist/PersistGate/PersistGate.tsx';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
@@ -10,6 +9,7 @@ import { persistor, store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
+import { Component, render } from 'ddd-react';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
 import {
@@ -115,39 +115,9 @@ const App = compose(
 	connect(mapStateToProps, mapDispatchToProps),
 )(AppComponent);
 
-class Test extends Component<{}, { test: boolean }> {
-	state = {
-		test: false,
-	};
-
-	didMount() {
-		setInterval(() => {
-			this.setState({ test: !this.state.test });
-		}, 1000);
-	}
-
-	render() {
-		if (this.state.test) {
-			return this.props.children;
-		}
-
-		return null;
-	}
-}
-
-class App1 extends Component {
-	render() {
-		return (
-			<div>
-				<Test>
-					<span>333</span>
-					<br />
-					<span>444</span>
-				</Test>
-				<h3>asdf</h3>
-			</div>
-		);
-	}
-}
-
-render(<App1 />, document.body);
+render(
+	<ProvidersLayout>
+		<App />
+	</ProvidersLayout>,
+	document.body,
+);
